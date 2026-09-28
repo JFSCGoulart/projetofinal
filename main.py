@@ -4,7 +4,7 @@ from src.banco import criar_banco
 from src.models import Sistema
 from src.menus import menu_principal
 def main():
-"""Função principal."""
+    """Função principal."""
     criar_banco()
     sistema = Sistema()
     menu_principal(sistema)
