@@ -28,7 +28,7 @@ class Usuario:
         
 class Projeto:
         """Representa um projeto final."""
-        def __init__(self, id, titulo, descricao, area, tecnologias, usuario_
+        def __init__(self, id, titulo, descricao, area, tecnologias, usuario_id):
                 self.id = id
                 self.titulo = titulo
                 self.descricao = descricao
@@ -50,8 +50,9 @@ class Avaliacao:
                 self.comentario = comentario
         def __str__(self):
                 return f"Nota {self.nota}/5 - {self.comentario[:30]}"
-                class Sala:
-                """Representa uma sala física."""
+        
+class Sala:
+        """Representa uma sala física."""
         def __init__(self, id, nome, andar, capacidade, tipo, ativa=1):
                 self.id = id
                 self.nome = nome
@@ -61,9 +62,10 @@ class Avaliacao:
                 self.ativa = ativa
         def __str__(self):
                 return f"{self.nome} - {self.capacidade} lugares ({self.tipo})"
-                class Reserva:
-                """Representa uma reserva de sala."""
-        def __init__(self, id, sala_id, usuario_id, data, horario, motivo, st
+
+class Reserva:
+        """Representa uma reserva de sala."""
+        def __init__(self, id, sala_id, usuario_id, data, horario, motivo, st):
                 self.id = id
                 self.sala_id = sala_id
                 self.usuario_id = usuario_id
@@ -73,8 +75,9 @@ class Avaliacao:
                 self.status = status
         def __str__(self):
                 return f"Reserva #{self.id} - {self.data} {self.horario}"
-                class Sistema:
-                """Gerencia o estado da aplicação (usuário logado)."""
+
+class Sistema:
+        """Gerencia o estado da aplicação (usuário logado)."""
         def __init__(self):
                 self.usuario_logado = None
         def esta_logado(self):
