@@ -45,18 +45,18 @@ def __str__(self):
         return f"Nota {self.nota}/5 - {self.comentario[:30]}"
 class Sala:
         """Representa uma sala física."""
-def __init__(self, id, nome, andar, capacidade, tipo, ativa=1):
+def __init__(self, id, curso, andar, capacidade, turno, ativa=1):
         self.id = id
-        self.nome = nome
+        self.curso = curso
         self.andar = andar
         self.capacidade = capacidade
-        self.tipo = tipo
+        self.turno = turno
         self.ativa = ativa
 def __str__(self):
         return f"{self.nome} - {self.capacidade} lugares ({self.tipo})"
 class Reserva:
         """Representa uma reserva de sala."""
-def __init__(self, id, sala_id, usuario_id, data, horario, motivo, st
+def __init__(self, id, sala_id, usuario_id, data, horario, motivo, status, turno):
         self.id = id
         self.sala_id = sala_id
         self.usuario_id = usuario_id
@@ -64,6 +64,7 @@ def __init__(self, id, sala_id, usuario_id, data, horario, motivo, st
         self.horario = horario
         self.motivo = motivo
         self.status = status
+        self.turno = turno
 def __str__(self):
         return f"Reserva #{self.id} - {self.data} {self.horario}"
 class Sistema:
