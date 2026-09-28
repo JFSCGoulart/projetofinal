@@ -1,14 +1,28 @@
 # src/banco.py
 """Todas as operações de banco de dados."""
-import sqlite3
-from config import BANCO, SCHEMA
+from config import BANCO
 # ============ CONEXÃO ============
 def conectar():
     """Abre conexão com o banco."""
     return sqlite3.connect(BANCO)
 def criar_banco():
     """Executa o schema.sql criando as tabelas."""
-    pass
+    conexao = sqlite3.connect(BANCO)
+    cursor= conexao.cursor()
+    cursor.execute(""" 
+                   CREATE TABLE IF NOT EXISTS banco(
+                   id INTEGER PRIMARY KEY AUTOINCREMENT,
+                   nome TEXT NOT NULL,
+                   email TEXT NOT NULL UNIQUE,
+                   senha TEXT NOT NULL,
+                   turma TEXT NOT NULL,
+                   tipo TEXT NOT NULL
+                   ) 
+        """)
+    
+    conexao.commit()
+    conexao.close()
+        
 
 # ============ USUÁRIOS (5) ============
 def inserir_usuario(nome, email, senha_hash, turma, tipo):
@@ -126,3 +140,5 @@ def listar_todas_reservas():
 def cancelar_reserva(reserva_id):
     """Muda status para 'cancelada'."""
     pass
+
+

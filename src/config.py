@@ -2,7 +2,7 @@
 """Configurações globais do sistema."""
 # Caminhos
 BANCO = "qualifica_hub.db"
-SCHEMA = "schema.sql"
+
 RELATORIO = "data/relatorio.csv"
 # Sistema
 NOME_SISTEMA = "Qualifica Hub"
