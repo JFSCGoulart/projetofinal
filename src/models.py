@@ -9,20 +9,25 @@ class Usuario:
                 self.senha = senha          
                 self.turma = turma
                 self.tipo = tipo
+
         def pode_avaliar(self):
                 # Sem encapsulamento
                 """Professor e coordenador podem avaliar."""
                 return self.tipo in ["professor", "coordenador"]
+        
         def pode_reservar(self):
                 """Professor e coordenador podem reservar."""
                 return self.tipo in ["professor", "coordenador"]
+        
         def pode_gerenciar(self):
                 """Somente coordenador pode gerenciar."""
                 return self.tipo == "coordenador"
+        
         def __str__(self):
                 return f"{self.nome} ({self.tipo})"
-                class Projeto:
-                """Representa um projeto final."""
+        
+class Projeto:
+        """Representa um projeto final."""
         def __init__(self, id, titulo, descricao, area, tecnologias, usuario_
                 self.id = id
                 self.titulo = titulo
@@ -31,10 +36,12 @@ class Usuario:
                 self.tecnologias = tecnologias
                 self.usuario_id = usuario_id
                 self.ano = ano
+
         def __str__(self):
-                        return f"[{self.id}] {self.titulo} ({self.area}, {self.ano})"
-                class Avaliacao:
-                        """Representa uma avaliação de projeto."""
+                return f"[{self.id}] {self.titulo} ({self.area}, {self.ano})"
+
+class Avaliacao:
+        """Representa uma avaliação de projeto."""
         def __init__(self, id, usuario_id, projeto_id, nota, comentario):
                 self.id = id
                 self.usuario_id = usuario_id
