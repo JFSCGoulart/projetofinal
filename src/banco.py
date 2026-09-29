@@ -26,8 +26,21 @@ def criar_banco():
 
 # ============ USUÁRIOS (5) ============
 def inserir_usuario(nome, email, senha_hash, turma, tipo):
-    """Insere usuário. Retorna ID ou None."""
-    pass
+    conexao = sqlite3.connect("banco.db")
+
+    cursor= conexao.cursor()
+    nome=input("Nome: ")
+    email=input("email: ")
+    senha=input("senha_hash: ")
+    turma=input("turma: ")
+    tipo=input("tipo: ")
+    cursor.execute(
+        """
+        INSERT INTO produtos ( nome, email, senha_hash, turma, tipo) VALUES(?,?,?,?,?)
+        """,(nome, email, senha_hash, turma, tipo)
+    )
+    conexao.commit()
+    conexao.close()
 
 def buscar_usuario_por_email(email):
     """Retorna usuário (tupla) ou None."""
