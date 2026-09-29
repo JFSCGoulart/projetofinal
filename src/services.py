@@ -41,9 +41,38 @@ def fazer_login(email, senha):
 # ============ PROJETOS (5) ============
 def cadastrar_projeto(titulo, descricao, area, tecnologias, usuario_id, ano):
     """Cadastra projeto. Retorna (sucesso, mensagem)."""
+    conexao = sqlite3.connect("qualifica_hub.db")
+
+    cursor= conexao.cursor()
+    descricao=input("descricao: ")
+    area=input("area: ")
+    tecnologias=input("tecnologias: ")
+    usuario_id=input("usuario_id: ")
+    ano=input("ano: ")
+    cursor.execute(
+        """
+        INSERT INTO projetos (titulo, descricao, area, tecnologias, usuario_id, ano) VALUES(?,?,?,?,?,?)
+        """,(titulo, descricao, area, tecnologias, usuario_id, ano)
+    )
+    conexao.commit()
+    conexao.close()
     pass
+
 def remover_projeto(projeto_id, usuario_id, tipo_usuario):
     """Remove projeto (dono ou coordenador)."""
+    conexao = sqlite3.connect("qualifica_hub.db")
+    cursor=conexao.cursor()
+
+    busca=input("Insira o ID do projeto: ")
+    busca=input("Insira o ID do usuario: ")
+    busca=input("Insira o tipo_usuario: ")
+
+    cursor.execute("""
+        DELETE FROM projetos
+        WHERE projeto_id=? and usuario_id=? and tipo_usuario=?
+    """, (busca, busca, busca))
+    conexao.commit()
+    conexao.close()
     pass
 def buscar_projetos(termo=None, area=None):
     """Busca projetos combinando filtros."""
