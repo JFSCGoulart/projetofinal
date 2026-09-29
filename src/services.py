@@ -85,8 +85,21 @@ def remover_projeto(projeto_id, usuario_id, tipo_usuario):
     conexao.commit()
     conexao.close()
     pass
-def buscar_projetos(termo=None, area=None):
+def buscar_projetos(area=None, ano=None):
     """Busca projetos combinando filtros."""
+    conexao = sqlite3.connect("qualifica_hub.db")
+    cursor=conexao.cursor()
+    busca=input("Insira o area: ")
+    busca=input("Insira o ano: ")
+    cursor.execute(
+    """
+        SELECT * FROM projetos
+        WHERE area = ? And ano = ?
+    """,(busca, busca)
+    )
+    for titulo, descricao, area, tecnologias, usuario_id, ano in cursor.fetchall():
+            print(f"{titulo} - {descricao} - {area} - {tecnologias} - {usuario_id} - {ano}")
+    conexao.close()
     pass
 def obter_detalhes_projeto(projeto_id):
     """Retorna detalhes formatados de um projeto."""
