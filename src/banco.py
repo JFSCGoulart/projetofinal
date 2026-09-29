@@ -6,32 +6,90 @@ def conectar():
     """Abre conexão com o banco."""
     return sqlite3.connect(BANCO)
 def criar_banco():
-    """Executa o schema.sql criando as tabelas."""
-    conexao = sqlite3.connect(BANCO)
+    """Executa a criação das tabelas."""
+    conexao = conectar()
     cursor= conexao.cursor()
-    cursor.execute(""" 
-                   CREATE TABLE IF NOT EXISTS banco(
-                   id INTEGER PRIMARY KEY AUTOINCREMENT,
-                   nome TEXT NOT NULL,
-                   email TEXT NOT NULL UNIQUE,
-                   senha TEXT NOT NULL,
-                   turma TEXT NOT NULL,
-                   tipo TEXT NOT NULL
-                   ) 
-        """)
-    
+    cursor.executescript("""
+    CREATE TABLE IF NOT EXISTS usuario (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome TEXT NOT NULL,
+        email TEXT NOT NULL UNIQUE,
+        senha TEXT NOT NULL,
+        turma TEXT NOT NULL,
+        tipo TEXT NOT NULL DEFAULT 'publico'
+            CHECK (tipo IN ('publico', 'professor', 'coordenador'))
+    );
+
+    CREATE TABLE IF NOT EXISTS projeto (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        titulo TEXT NOT NULL,
+        descricao TEXT NOT NULL,
+        area TEXT NOT NULL,
+        tecnologias TEXT,
+        usuario_id INTEGER NOT NULL,
+        ano INTEGER NOT NULL,
+        FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+            ON UPDATE NO ACTION
+            ON DELETE NO ACTION
+    );
+
+    CREATE TABLE IF NOT EXISTS avaliacoes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        usuario_id INTEGER NOT NULL,
+        projeto_id INTEGER NOT NULL,
+        nota INTEGER NOT NULL CHECK (nota BETWEEN 1 AND 5),
+        comentario TEXT,
+
+        FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+            ON UPDATE NO ACTION
+            ON DELETE NO ACTION,
+
+        FOREIGN KEY (projeto_id) REFERENCES projeto(id)
+            ON UPDATE NO ACTION
+            ON DELETE NO ACTION
+    );
+
+    CREATE TABLE IF NOT EXISTS salas (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome TEXT NOT NULL,
+        andar INTEGER NOT NULL,
+        capacidade INTEGER NOT NULL,
+        tipo TEXT NOT NULL DEFAULT 'sala_aula',
+        ativa INTEGER NOT NULL DEFAULT 1
+    );
+
+    CREATE TABLE IF NOT EXISTS reservas (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        sala_id INTEGER NOT NULL,
+        usuario_id INTEGER NOT NULL,
+        data TEXT NOT NULL,
+        horario TEXT NOT NULL,
+        motivo TEXT,
+        status TEXT NOT NULL DEFAULT 'ativa',
+
+        FOREIGN KEY (sala_id) REFERENCES salas(id)
+            ON UPDATE NO ACTION
+            ON DELETE NO ACTION,
+
+        FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+            ON UPDATE NO ACTION
+            ON DELETE NO ACTION,
+
+        UNIQUE (sala_id, data, horario)
+    );
+    """)
     conexao.commit()
     conexao.close()
         
 
 # ============ USUÁRIOS (5) ============
 def inserir_usuario(nome, email, senha_hash, turma, tipo):
-    conexao = sqlite3.connect("qualifica_hub.db")
-
+    conexao = conectar()
     cursor= conexao.cursor()
+    
     nome=input("Nome: ")
     email=input("email: ")
-    senha=input("senha_hash: ")
+    senha_hash=input("senha_hash: ")
     turma=input("turma: ")
     tipo=input("tipo: ")
     cursor.execute(
@@ -43,7 +101,7 @@ def inserir_usuario(nome, email, senha_hash, turma, tipo):
     conexao.close()
 
 def buscar_usuario_por_email(email):
-    conexao = sqlite3.connect("qualifica_hub.db")
+    conexao = conectar()
     cursor=conexao.cursor()
 
     busca=input("Insira o email: ")
@@ -60,7 +118,8 @@ def buscar_usuario_por_email(email):
 
 def buscar_usuario_por_id(usuario_id):
     """Retorna usuário (tupla) ou None."""
-    conexao = sqlite3.connect("qualifica_hub.db")
+    conexao = conectar()
+    cursor = conexao.cursor()
     cursor.execute ("SELECT * FROM usuarios WHERE id = ?", (usuario_id,))
     usuario = cursor.fetchone()
     conexao.close ()
@@ -68,8 +127,8 @@ def buscar_usuario_por_id(usuario_id):
 
 def listar_usuarios():
     """Lista todos os usuários."""
-    conexao = sqlite3.connect ("qualifica_hub.db")
-    cursor = conexao.cursor ()
+    conexao = conectar()
+    cursor = conexao.cursor()
     cursor.execute ("SELECT * FROM usuarios")
     usuarios = cursor.fetchall()
     conexao.close()
@@ -78,17 +137,12 @@ def listar_usuarios():
 
 def atualizar_tipo_usuario(usuario_id, novo_tipo):
     """Atualiza o tipo de um usuário."""
-<<<<<<< HEAD
-    
-    pass
-=======
-    conexao = sqlite3.connect("qualifica_hub.db")
+    conexao = conectar()
     cursor = conexao.cursor()
     cursor.execute("UPDATE usuarios SET tipo = ? WHERE id = ?", (novo_tipo, usuario_id))
     conexao.commit()
     conexao.close()
     return atualizar_tipo_usuario
->>>>>>> 85db559753a4442d5c4b4d9b0fa643976c00cb86
 
 # ============ PROJETOS (7) ============
 def inserir_projeto(titulo, descricao, area, tecnologias, usuario_id, ano):
@@ -186,4 +240,19 @@ def cancelar_reserva(reserva_id):
     """Muda status para 'cancelada'."""
     pass
 
-
+'''
+-- Dados iniciais
+INSERT OR IGNORE INTO usuarios (id, nome, email, senha, turma, tipo)
+VALUES (1, 'Coordenador Padrão', 'admin@qualifica.com',
+'hash_admin', NULL, 'coordenador');
+INSERT OR IGNORE INTO salas (nome, andar, capacidade, tipo) VALUES
+('Sala 101', 1, 30, 'sala_aula'),
+('Sala 102', 1, 30, 'sala_aula'),
+('Sala 103', 1, 20, 'laboratorio'),
+('Sala 201', 2, 40, 'sala_aula'),
+('Sala 202', 2, 25, 'laboratorio'),
+('Sala 203', 2, 30, 'sala_aula'),
+('Sala 301', 3, 50, 'auditorio'),
+('Sala 302', 3, 30, 'sala_aula'),
+('Sala 401', 4, 100, 'auditorio'),
+('Sala 402', 4, 25, 'reuniao');'''
