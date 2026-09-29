@@ -6,11 +6,18 @@ from datetime import datetime
 from banco import *
 from config import *
 # ============ SEGURANÇA E VALIDAÇÕES (6) ============
+
+senha=input("Informe uma senha:").strip()
 def gerar_hash(senha):
     """Gera hash SHA-256 da senha."""
+    s_hash = hashlib.sha256(senha.encode("utf-8"))
+    senha_dex = s_hash.hexdigest()
+    return senha_dex
+
     pass
 def verificar_senha(senha_digitada, hash_salvo):
     """Verifica se a senha corresponde ao hash."""
+    
     pass
 def validar_email(email):
     """Valida formato do email. Retorna (bool, msg)."""
