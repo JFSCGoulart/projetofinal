@@ -43,12 +43,25 @@ def inserir_usuario(nome, email, senha_hash, turma, tipo):
     conexao.close()
 
 def buscar_usuario_por_email(email):
-    """Retorna usuário (tupla) ou None."""
-    pass
+    conexao = sqlite3.connect("banco.db")
+    cursor=conexao.cursor()
+
+    busca=input("Insira o email: ")
+
+    cursor.execute(
+    """
+        SELECT * FROM usuarios
+        WHERE email = ?
+    """,(busca)
+    )
+    for id, nome, email, turma, tipo in cursor.fetchall():
+            print(f"{id} - {nome} - {email} - {turma} - {tipo}")
+    conexao.close()
 
 def buscar_usuario_por_id(usuario_id):
     """Retorna usuário (tupla) ou None."""
     pass
+
 
 def listar_usuarios():
     """Lista todos os usuários."""
