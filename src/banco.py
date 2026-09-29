@@ -60,16 +60,35 @@ def buscar_usuario_por_email(email):
 
 def buscar_usuario_por_id(usuario_id):
     """Retorna usuário (tupla) ou None."""
-    pass
-
+    conexao = sqlite3.connect("qualifica_hub.db")
+    cursor.execute ("SELECT * FROM usuarios WHERE id = ?", (usuario_id,))
+    usuario = cursor.fetchone()
+    conexao.close ()
+    return usuario
 
 def listar_usuarios():
     """Lista todos os usuários."""
-    pass
+    conexao = sqlite3.connect ("qualifica_hub.db")
+    cursor = conexao.cursor ()
+    cursor.execute ("SELECT * FROM usuarios")
+    usuarios = cursor.fetchall()
+    conexao.close()
+    return usuarios
+
 
 def atualizar_tipo_usuario(usuario_id, novo_tipo):
     """Atualiza o tipo de um usuário."""
+<<<<<<< HEAD
+    
     pass
+=======
+    conexao = sqlite3.connect("qualifica_hub.db")
+    cursor = conexao.cursor()
+    cursor.execute("UPDATE usuarios SET tipo = ? WHERE id = ?", (novo_tipo, usuario_id))
+    conexao.commit()
+    conexao.close()
+    return atualizar_tipo_usuario
+>>>>>>> 85db559753a4442d5c4b4d9b0fa643976c00cb86
 
 # ============ PROJETOS (7) ============
 def inserir_projeto(titulo, descricao, area, tecnologias, usuario_id, ano):

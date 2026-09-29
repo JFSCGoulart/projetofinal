@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "nome": "Carlos Aluno",
+        "email": "aluno@email.com",
+        "senha": "123",
+        "turma": "3A",
+        "tipo": "aluno"
+    },
+    {
+        "id": 2,
+        "nome": "Prof. Roberto",
+        "email": "roberto@email.com",
+        "senha": "123",
+        "turma": "Nenhum",
+        "tipo": "professor"
+    },
+    {
+        "id": 3,
+        "nome": "Ana Coord",
+        "email": "coord@email.com",
+        "senha": "123",
+        "turma": "Nenhum",
+        "tipo": "coordenador"
+    }
+]

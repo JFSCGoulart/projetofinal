@@ -7,7 +7,7 @@ from banco import *
 from config import *
 # ============ SEGURANÇA E VALIDAÇÕES (6) ============
 
-senha=input("Informe uma senha:").strip()
+
 def gerar_hash(senha):
     """Gera hash SHA-256 da senha."""
     s_hash = hashlib.sha256(senha.encode("utf-8"))
@@ -17,13 +17,14 @@ def gerar_hash(senha):
     pass
 def verificar_senha(senha_digitada, hash_salvo):
     """Verifica se a senha corresponde ao hash."""
-    
+
     pass
 def validar_email(email):
     """Valida formato do email. Retorna (bool, msg)."""
 pass
 def validar_senha(senha):
     """Valida tamanho mínimo. Retorna (bool, msg)."""
+    
     pass
 def validar_data(data):
     """Valida formato DD/MM/AAAA. Retorna (bool, msg)."""
