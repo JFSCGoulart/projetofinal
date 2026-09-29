@@ -1,29 +1,37 @@
 # src/models.py
 """Classes de modelo do sistema."""
-class Usuario:
-        """Representa um usuário do sistema."""
-def __init__(self, id, nome, email, senha, turma, tipo):
 
+class Usuario:
+    """Representa um usuário do sistema."""
+
+    def __init__(self, id, nome, email, senha, turma, tipo):
         self.id = id
         self.nome = nome
         self.email = email
         self.senha = senha          
         self.turma = turma
         self.tipo = tipo
-def pode_avaliar(self):
+
+    def pode_avaliar(self):
         """Professor e coordenador podem avaliar."""
         return self.tipo in ["professor", "coordenador"]
-def pode_reservar(self):
+
+    def pode_reservar(self):
         """Professor e coordenador podem reservar."""
         return self.tipo in ["professor", "coordenador"]
-def pode_gerenciar(self):
+
+    def pode_gerenciar(self):
         """Somente coordenador pode gerenciar."""
         return self.tipo == "coordenador"
-def __str__(self):
+
+    def __str__(self):
         return f"{self.nome} ({self.tipo})"
+
+
 class Projeto:
-        """Representa um projeto final."""
-def __init__(self, id, titulo, descricao, area, tecnologias, usuario_id, ano):
+    """Representa um projeto final."""
+
+    def __init__(self, id, titulo, descricao, area, tecnologias, usuario_id, ano):
         self.id = id
         self.titulo = titulo
         self.descricao = descricao
@@ -31,32 +39,46 @@ def __init__(self, id, titulo, descricao, area, tecnologias, usuario_id, ano):
         self.tecnologias = tecnologias
         self.usuario_id = usuario_id
         self.ano = ano
-def __str__(self):
+
+    def __str__(self):
         return f"[{self.id}] {self.titulo} ({self.area}, {self.ano})"
+
+
 class Avaliacao:
-        """Representa uma avaliação de projeto."""
-def __init__(self, id, usuario_id, projeto_id, nota, comentario):
+    """Representa uma avaliação de projeto."""
+
+    def __init__(self, id, usuario_id, projeto_id, nota, comentario):
         self.id = id
         self.usuario_id = usuario_id
         self.projeto_id = projeto_id
         self.nota = nota
         self.comentario = comentario
-def __str__(self):
+
+    def __str__(self):
         return f"Nota {self.nota}/5 - {self.comentario[:30]}"
+
+
 class Sala:
-        """Representa uma sala física."""
-def __init__(self, id, curso, andar, capacidade, turno, ativa=1):
+    """Representa uma sala física."""
+
+    def __init__(self, id, curso, andar, capacidade, turno, ativa=1):
         self.id = id
         self.curso = curso
         self.andar = andar
         self.capacidade = capacidade
         self.turno = turno
         self.ativa = ativa
-def __str__(self):
-        return f"{self.nome} - {self.capacidade} lugares ({self.tipo})"
+
+    def __str__(self):
+        # Correção: Mudado self.nome e self.tipo para self.curso e self.turno
+        status = "Ativa" if self.ativa == 1 else "Inativa"
+        return f"Sala {self.id} (Curso: {self.curso}) - {self.capacidade} lugares ({self.turno}) - {status}"
+
+
 class Reserva:
-        """Representa uma reserva de sala."""
-def __init__(self, id, sala_id, usuario_id, data, horario, motivo, status, turno):
+    """Representa uma reserva de sala."""
+
+    def __init__(self, id, sala_id, usuario_id, data, horario, motivo, status, turno):
         self.id = id
         self.sala_id = sala_id
         self.usuario_id = usuario_id
@@ -65,18 +87,25 @@ def __init__(self, id, sala_id, usuario_id, data, horario, motivo, status, turno
         self.motivo = motivo
         self.status = status
         self.turno = turno
-def __str__(self):
+
+    def __str__(self):
         return f"Reserva #{self.id} - {self.data} {self.horario}"
+
+
 class Sistema:
-        """Gerencia o estado da aplicação (usuário logado)."""
-def __init__(self):
+    """Gerencia o estado da aplicação (usuário logado)."""
+
+    def __init__(self):
         self.usuario_logado = None
-def esta_logado(self):
+
+    def esta_logado(self):
         """Retorna True se há usuário logado."""
         return self.usuario_logado is not None
-def login(self, usuario):
+
+    def login(self, usuario):
         """Define o usuário logado."""
         self.usuario_logado = usuario
-def logout(self):
+
+    def logout(self):
         """Encerra a sessão."""
         self.usuario_logado = None
