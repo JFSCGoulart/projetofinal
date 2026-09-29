@@ -26,7 +26,7 @@ def validar_email(email):
     padrao = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
     if not email:
         return False, "O e-mail não pode estar vazio!"
-    elif re.fullmatch(padrao, email):
+    if re.fullmatch(padrao, email):
         return True, "E-mail válido."
     else:
         return False, "Formato de e-mail inválido. Exemplo correto: nome@email.com"
@@ -35,6 +35,10 @@ pass
 def validar_senha(senha):
     """Valida tamanho mínimo. Retorna (bool, msg)."""
     
+    if not senha:
+        print("Senha vazia!")
+    if len(senha) <8:
+        print("A senha deve conter no mínimo 8 caracteres"
     pass
 def validar_data(data):
     """Valida formato DD/MM/AAAA. Retorna (bool, msg)."""
