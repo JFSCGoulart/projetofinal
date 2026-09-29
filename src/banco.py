@@ -78,6 +78,7 @@ def listar_usuarios():
 
 def atualizar_tipo_usuario(usuario_id, novo_tipo):
     """Atualiza o tipo de um usuário."""
+    
     pass
 
 # ============ PROJETOS (7) ============
