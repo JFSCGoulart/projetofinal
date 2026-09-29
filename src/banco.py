@@ -78,8 +78,17 @@ def listar_usuarios():
 
 def atualizar_tipo_usuario(usuario_id, novo_tipo):
     """Atualiza o tipo de um usuário."""
+<<<<<<< HEAD
     
     pass
+=======
+    conexao = sqlite3.connect("qualifica_hub.db")
+    cursor = conexao.cursor()
+    cursor.execute("UPDATE usuarios SET tipo = ? WHERE id = ?", (novo_tipo, usuario_id))
+    conexao.commit()
+    conexao.close()
+    return atualizar_tipo_usuario
+>>>>>>> 85db559753a4442d5c4b4d9b0fa643976c00cb86
 
 # ============ PROJETOS (7) ============
 def inserir_projeto(titulo, descricao, area, tecnologias, usuario_id, ano):
