@@ -26,7 +26,7 @@ def criar_banco():
 
 # ============ USUÁRIOS (5) ============
 def inserir_usuario(nome, email, senha_hash, turma, tipo):
-    conexao = sqlite3.connect("banco.db")
+    conexao = sqlite3.connect("qualifica_hub.db")
 
     cursor= conexao.cursor()
     nome=input("Nome: ")
@@ -43,7 +43,7 @@ def inserir_usuario(nome, email, senha_hash, turma, tipo):
     conexao.close()
 
 def buscar_usuario_por_email(email):
-    conexao = sqlite3.connect("banco.db")
+    conexao = sqlite3.connect("qualifica_hub.db")
     cursor=conexao.cursor()
 
     busca=input("Insira o email: ")
