@@ -26,7 +26,7 @@ def validar_email(email):
     padrao = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
     if not email:
         return False, "O e-mail não pode estar vazio!"
-    elif re.match(padrao, email):
+    elif re.fullmatch(padrao, email):
         return True, "E-mail válido."
     else:
         return False, "Formato de e-mail inválido. Exemplo correto: nome@email.com"
