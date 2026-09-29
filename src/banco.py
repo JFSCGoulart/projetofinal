@@ -1,6 +1,7 @@
 # src/banco.py
 """Todas as operações de banco de dados."""
 from config import BANCO
+import sqlite3
 # ============ CONEXÃO ============
 def conectar():
     """Abre conexão com o banco."""
@@ -10,12 +11,12 @@ def criar_banco():
     conexao = conectar()
     cursor= conexao.cursor()
     cursor.executescript("""
-    CREATE TABLE IF NOT EXISTS usuario (
+    CREATE TABLE IF NOT EXISTS usuarios (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT NOT NULL,
         email TEXT NOT NULL UNIQUE,
         senha TEXT NOT NULL,
-        turma TEXT NOT NULL,
+        turma TEXT,
         tipo TEXT NOT NULL DEFAULT 'publico'
             CHECK (tipo IN ('publico', 'professor', 'coordenador'))
     );
@@ -81,7 +82,6 @@ def criar_banco():
     conexao.commit()
     conexao.close()
         
-
 # ============ USUÁRIOS (5) ============
 def inserir_usuario(nome, email, senha_hash, turma, tipo):
     conexao = conectar()
@@ -94,12 +94,11 @@ def inserir_usuario(nome, email, senha_hash, turma, tipo):
     tipo=input("tipo: ")
     cursor.execute(
         """
-        INSERT INTO produtos ( nome, email, senha_hash, turma, tipo) VALUES(?,?,?,?,?)
+        INSERT INTO usuarios (nome, email, senha, turma, tipo) VALUES(?,?,?,?,?)
         """,(nome, email, senha_hash, turma, tipo)
     )
     conexao.commit()
     conexao.close()
-
 def buscar_usuario_por_email(email):
     conexao = conectar()
     cursor=conexao.cursor()
@@ -240,19 +239,215 @@ def cancelar_reserva(reserva_id):
     """Muda status para 'cancelada'."""
     pass
 
-'''
--- Dados iniciais
-INSERT OR IGNORE INTO usuarios (id, nome, email, senha, turma, tipo)
-VALUES (1, 'Coordenador Padrão', 'admin@qualifica.com',
-'hash_admin', NULL, 'coordenador');
-INSERT OR IGNORE INTO salas (nome, andar, capacidade, tipo) VALUES
-('Sala 101', 1, 30, 'sala_aula'),
-('Sala 102', 1, 30, 'sala_aula'),
-('Sala 103', 1, 20, 'laboratorio'),
-('Sala 201', 2, 40, 'sala_aula'),
-('Sala 202', 2, 25, 'laboratorio'),
-('Sala 203', 2, 30, 'sala_aula'),
-('Sala 301', 3, 50, 'auditorio'),
-('Sala 302', 3, 30, 'sala_aula'),
-('Sala 401', 4, 100, 'auditorio'),
-('Sala 402', 4, 25, 'reuniao');'''
+
+def inserir_dados_iniciais():
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    try:
+        cursor.execute("""
+            INSERT INTO usuarios (id, nome, email, senha, turma, tipo)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (
+            1,
+            'Coordenador Padrão',
+            'admin@qualifica.com',
+            'hash_admin',
+            None,
+            'coordenador'
+        ))
+
+        cursor.execute("""
+            INSERT INTO salas (nome, andar, capacidade, tipo) VALUES
+                ('Sala 101', 1, 30, 'sala_aula'),
+                ('Sala 102', 1, 30, 'sala_aula'),
+                ('Sala 103', 1, 20, 'laboratorio'),
+                ('Sala 201', 2, 40, 'sala_aula'),
+                ('Sala 202', 2, 25, 'laboratorio'),
+                ('Sala 203', 2, 30, 'sala_aula'),
+                ('Sala 301', 3, 50, 'auditorio'),
+                ('Sala 302', 3, 30, 'sala_aula'),
+                ('Sala 401', 4, 100, 'auditorio'),
+                ('Sala 402', 4, 25, 'reuniao')
+        """)
+
+        conexao.commit()
+        print("Dados iniciais inseridos com sucesso!")
+
+    except Exception as e:
+        conexao.rollback()
+        print("ERRO AO INSERIR DADOS:", e)
+
+    finally:
+        conexao.close()
+
+
+def inserir_dados_teste():
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    try:
+        # Usuários
+        cursor.executemany("""
+            INSERT OR IGNORE INTO usuarios
+            (id, nome, email, senha, turma, tipo)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, [
+            (
+                1,
+                'Coordenador Padrão',
+                'admin@qualifica.com',
+                '123456',
+                None,
+                'coordenador'
+            ),
+            (
+                2,
+                'João Silva',
+                'joao@qualifica.com',
+                '123456',
+                'Turma A',
+                'professor'
+            ),
+            (
+                3,
+                'Maria Santos',
+                'maria@qualifica.com',
+                '123456',
+                'Turma A',
+                'publico'
+            ),
+            (
+                4,
+                'Pedro Oliveira',
+                'pedro@qualifica.com',
+                '123456',
+                'Turma B',
+                'publico'
+            )
+        ])
+
+        # Projetos
+        cursor.executemany("""
+            INSERT OR IGNORE INTO projeto
+            (id, titulo, descricao, area, tecnologias, usuario_id, ano)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, [
+            (
+                1,
+                'Sistema de Biblioteca',
+                'Sistema para gerenciamento de livros e empréstimos.',
+                'Tecnologia',
+                'Python, SQLite, Flask',
+                3,
+                2026
+            ),
+            (
+                2,
+                'Aplicativo Educacional',
+                'Aplicativo para auxiliar alunos nos estudos.',
+                'Educação',
+                'Python, JavaScript, HTML, CSS',
+                4,
+                2026
+            ),
+            (
+                3,
+                'Controle de Estoque',
+                'Sistema para controle de produtos e estoque.',
+                'Administração',
+                'Python, SQLite',
+                3,
+                2026
+            )
+        ])
+
+        # Avaliações
+        cursor.executemany("""
+            INSERT OR IGNORE INTO avaliacoes
+            (id, usuario_id, projeto_id, nota, comentario)
+            VALUES (?, ?, ?, ?, ?)
+        """, [
+            (
+                1,
+                2,
+                1,
+                5,
+                'Excelente projeto e muito bem organizado.'
+            ),
+            (
+                2,
+                2,
+                2,
+                4,
+                'Boa ideia e apresentação.'
+            ),
+            (
+                3,
+                3,
+                3,
+                5,
+                'Projeto muito útil.'
+            )
+        ])
+
+        # Salas
+        cursor.executemany("""
+            INSERT OR IGNORE INTO salas
+            (id, nome, andar, capacidade, tipo, ativa)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, [
+            (1, 'Sala 101', 1, 30, 'sala_aula', 1),
+            (2, 'Sala 102', 1, 30, 'sala_aula', 1),
+            (3, 'Laboratório 103', 1, 20, 'laboratorio', 1),
+            (4, 'Sala 201', 2, 40, 'sala_aula', 1),
+            (5, 'Laboratório 202', 2, 25, 'laboratorio', 1),
+            (6, 'Auditório 301', 3, 50, 'auditorio', 1)
+        ])
+
+        # Reservas
+        cursor.executemany("""
+            INSERT OR IGNORE INTO reservas
+            (id, sala_id, usuario_id, data, horario, motivo, status)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, [
+            (
+                1,
+                1,
+                1,
+                '2026-10-01',
+                '08:00-10:00',
+                'Aula de programação',
+                'ativa'
+            ),
+            (
+                2,
+                3,
+                2,
+                '2026-10-01',
+                '14:00-16:00',
+                'Aula prática de Python',
+                'ativa'
+            ),
+            (
+                3,
+                6,
+                1,
+                '2026-10-05',
+                '18:00-20:00',
+                'Apresentação de projetos',
+                'ativa'
+            )
+        ])
+
+        conexao.commit()
+        print("Dados de teste inseridos com sucesso!")
+
+    except Exception as erro:
+        conexao.rollback()
+        print("Erro ao inserir dados de teste:", erro)
+
+    finally:
+        conexao.close()
+
+
