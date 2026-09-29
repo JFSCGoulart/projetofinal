@@ -60,12 +60,21 @@ def buscar_usuario_por_email(email):
 
 def buscar_usuario_por_id(usuario_id):
     """Retorna usuário (tupla) ou None."""
-    pass
-
+    conexao = sqlite3.connect("banco.db")
+    cursor.execute ("SELECT * FROM usuarios WHERE id = ?", (usuario_id,))
+    usuario = cursor.fetchone()
+    conexao.close ()
+    return usuario
 
 def listar_usuarios():
     """Lista todos os usuários."""
-    pass
+    conexao = sqlite3.connect ("banco.db")
+    cursor = conexao.cursor ()
+    cursor.execute ("SELECT * FROM usuarios")
+    usuarios = cursor.fetchall()
+    conexao.close()
+    return usuarios
+
 
 def atualizar_tipo_usuario(usuario_id, novo_tipo):
     """Atualiza o tipo de um usuário."""
