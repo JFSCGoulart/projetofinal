@@ -30,7 +30,7 @@ def verificar_senha(senha_digitada, hash_salvo):
         else:
             print("Senha inválida!")
             return False
-
+    conexao.close()
     pass
 def validar_email(email):
     """Valida formato do email. Retorna (bool, msg)."""
