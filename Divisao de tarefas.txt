@@ -36,7 +36,7 @@ def desativar_sala			    |
 # ============ RESERVAS (6) ============
 def inserir_reserva			    |
 def verificar_disponibilidade	|
-def listar_reservas_usuario		|	
+def listar_reservas_usuario		|	  JoJo
 def listar_reservas_por_data	|		
 def listar_todas_reservas		|
 def cancelar_reserva			|
