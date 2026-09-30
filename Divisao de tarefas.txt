@@ -73,7 +73,7 @@ def avaliar_projeto				|
 # ============ SALAS (4) ============
 def listar_salas_agrupadas():	|
 def cadastrar_sala				|
-def desativar_sala				|
+def desativar_sala				|EM CONSTRUÇÃO (by Arthur)
 def obter_grade_horarios		|
 
 # ============ RESERVAS (3) ============

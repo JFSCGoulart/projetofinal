@@ -207,6 +207,26 @@ def cadastrar_sala(nome, andar, capacidade, tipo):
     pass
 def desativar_sala(sala_id):
     """Desativa sala (coordenador)."""
+    conexao = sqlite3.connect(BANCO)
+    cursor = conexao.cursor
+    
+    cursor.execute(""" comando para selecionar cordenador
+
+
+    """)
+    confirmacao = input(f"Deseja realmente desativa a seguinte sala: {sala_id}???\nDigite SIM ou NÃO: ").upper()
+    
+    if confirmacao == "SIM":
+        cursor.execute("""
+            UPDATE salas
+            SET = "DESATIVADA"
+            WHERE status = "ATIVA"
+            """)
+        conexao.commit()
+        conexao.close()    
+    else:
+        print("Nenhuma ateração realizada.")
+        conexao.close()
     pass
 def obter_grade_horarios(sala_id, data):
     """Retorna lista de dicts com horários e status."""
