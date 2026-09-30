@@ -31,7 +31,7 @@ def validar_email(email):
     else:
         return False, "Formato de e-mail inválido. Exemplo correto: nome@email.com"
   
-pass
+    pass
 def validar_senha(senha):
     """Valida tamanho mínimo. Retorna (bool, msg)."""
     
