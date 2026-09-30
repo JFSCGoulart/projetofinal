@@ -196,23 +196,75 @@ def ranking_projetos(limite=10):
 # ============ SALAS (5) ============
 def inserir_sala(nome, andar, capacidade, tipo):
     """Insere nova sala (coordenador)."""
-    pass
+    conexao = conectar()
+    cursor= conexao.cursor()
+    for nome, andar, capacidade, tipo in cursor.fetchall():
+        if inserir_sala=="coordenador":
+            us=("Usuário: ")
+            nome=input("Nome: ")
+            andar=input("Andar: ")
+            cap=input("Capacidade: ")
+            tipo=input("Tipo: ")
+            break
+        else:
+            print("Usuário não autorizado")
+    cursor.execute(
+        """
+        INSERT INTO sala (nome, andar, capacidade, tipo) VALUES(?,?,?,?)
+        """,(nome, andar, capacidade, tipo)
+    )
+
+    conexao.commit()
+    conexao.close()
 
 def buscar_sala_por_id(sala_id):
     """Retorna dados de uma sala."""
-    pass
+    conexao = conectar()
+    cursor=conexao.cursor()
+
+    busca=input("Insira a sala: ")
+
+    cursor.execute(
+    """
+        SELECT * FROM sala
+        WHERE email = ?
+    """,(busca)
+    )
+    for nome, andar, capacidade, tipo in cursor.fetchall():
+            print(f"{nome} - {andar} - {capacidade} - {tipo}")
+    conexao.close()
 
 def listar_salas():
     """Lista todas as salas ativas."""
-    pass
+    conexao = conectar()
+    cursor = conexao.cursor()
+    cursor.execute ("SELECT * FROM sala")
+    sala = cursor.fetchall()
+    conexao.close()
+    return sala
 
 def listar_salas_por_andar(andar):
     """Lista salas de um andar."""
-    pass
+    conexao = conectar()
+    cursor = conexao.cursor()
+    cursor.execute ("SELECT * FROM sala")
+    sala = cursor.fetchall()
+    conexao.close()
+    return sala
 
 def desativar_sala(sala_id):
     """Marca sala como inativa."""
-    pass
+    conexao = conectar()
+    cursor=conexao.cursor()
+
+    busca=input("Sala: ")
+    cursor.execute("""
+        DELETE FROM sala
+        WHERE nome=?
+    """, (busca,))
+    conexao.commit()
+    conexao.close()
+
 
 # ============ RESERVAS (6) ============
 def inserir_reserva(sala_id, usuario_id, data, horario, motivo):

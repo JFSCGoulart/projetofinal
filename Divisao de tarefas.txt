@@ -27,11 +27,11 @@ def media_projeto			        |
 def ranking_projetos			    |
 
 # ============ SALAS (5) ============
-def inserir_sala			    |
-def buscar_sala_por_id			|	
-def listar_salas():			    |		Dany
-def listar_salas_por_andar		|
-def desativar_sala			    |
+def inserir_sala			    |so
+def buscar_sala_por_id			|cor	
+def listar_salas():			    |ro		Dany
+def listar_salas_por_andar		|!
+def desativar_sala			    |!
 
 # ============ RESERVAS (6) ============
 def inserir_reserva			    |
