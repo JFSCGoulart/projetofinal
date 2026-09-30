@@ -84,5 +84,51 @@ def listar_minhas_reservas		|
 # ============ RELATÓRIOS (1) ============
 def exportar_csv():				|
 
+############################################################
+
+# src/menus.py
+
+# ============ AUXILIARES (4) ============
+def limpar_tela():                      |
+def titulo(texto):                      |
+def linha(tamanho=60):                  |
+def mensagem(tipo, texto):              |
+
+# ============ MENU PRINCIPAL (3) ============
+def menu_principal(sistema):            |
+def menu_visitante():                   | 
+def menu_buscar_publico():              |
+
+# ============ LOGIN / CADASTRO (2) ============
+def menu_cadastro():                    |
+def menu_login(sistema):                |
+
+# ============ MENUS POR TIPO (3) ============
+def menu_publico(sistema):              |
+def menu_professor(sistema):            |    
+def menu_coordenador(sistema):          |
+
+# ============ PROJETOS (3) ============
+def menu_cadastrar_projeto(sistema):    |
+def menu_meus_projetos(sistema):        |
+def menu_avaliar(sistema):              |
+
+# ============ SALAS (2) ============
+def menu_ver_salas():                   |
+def menu_grade_sala():                  |
+
+# ============ RESERVAS (3) ============
+def menu_reservar_sala(sistema):        |
+def menu_minhas_reservas(sistema):      |
+def menu_cancelar_reserva(sistema):     |
+
+# ============ COORDENADOR (2) ============
+def menu_gerenciar_salas(sistema):      |
+def menu_todas_reservas(sistema):       |
+
+# ============ RELATÓRIOS (1) ============
+def menu_relatorios(sistema):           |
+
+
 
 
