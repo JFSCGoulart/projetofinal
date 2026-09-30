@@ -1,0 +1,87 @@
+# src/banco.py
+
+def conectar():
+def criar_banco():
+        
+# ============ USUÁRIOS (5) ============
+def inserir_usuario(nome, email, senha_hash, turma, tipo): 	|
+def buscar_usuario_por_email(email):				|
+def buscar_usuario_por_id(usuario_id):				|  ok
+def listar_usuarios():						|
+def atualizar_tipo_usuario(usuario_id, novo_tipo):		|
+
+# ============ PROJETOS (7) ============
+def inserir_projeto			|
+def buscar_projeto_por_id		|
+def listar_projetos():			|
+def listar_projetos_por_usuario		|		Thainá
+def atualizar_projeto			|
+def deletar_projeto			|
+def buscar_projetos_por_termo		|
+
+# ============ AVALIAÇÕES (5) ============
+def inserir_avaliacao			|
+def listar_avaliacoes_projeto		|
+def ja_avaliou				|		Nat
+def media_projeto			|
+def ranking_projetos			|
+
+# ============ SALAS (5) ============
+def inserir_sala			|
+def buscar_sala_por_id			|	
+def listar_salas():			|		Dany
+def listar_salas_por_andar		|
+def desativar_sala			|
+
+# ============ RESERVAS (6) ============
+def inserir_reserva			|
+def verificar_disponibilidade		|
+def listar_reservas_usuario		|	
+def listar_reservas_por_data		|		
+def listar_todas_reservas		|
+def cancelar_reserva			|
+
+#######################################################################
+
+
+# src/services.py
+
+# ============ SEGURANÇA E VALIDAÇÕES (6) ============
+def gerar_hash(senha_digitada):			|ok
+def verificar_senha				|ok	
+def validar_email(email):			|ok
+def validar_senha(senha):			|
+def validar_data(data):				|   Arthur 
+def validar_campo(valor, nome_campo):		|
+
+# ============ AUTENTICAÇÃO (2) ============
+def cadastrar_usuario				|
+def fazer_login					|
+# ============ PROJETOS (5) ============
+def cadastrar_projeto				|ok
+def remover_projeto				|ok
+def buscar_projetos				|ok
+
+def obter_detalhes_projeto			| Nilton
+def obter_ranking(limite=10):			|
+
+
+# ============ AVALIAÇÕES (1) ============
+def avaliar_projeto				|
+
+# ============ SALAS (4) ============
+def listar_salas_agrupadas():			|
+def cadastrar_sala				|
+def desativar_sala				|
+def obter_grade_horarios			|
+
+# ============ RESERVAS (3) ============
+def reservar_sala				|
+def cancelar_reserva				|
+def listar_minhas_reservas			|
+
+# ============ RELATÓRIOS (1) ============
+def exportar_csv():				|
+
+
+
