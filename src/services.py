@@ -5,20 +5,19 @@ import csv
 from datetime import datetime
 from banco import *
 from config import *
-import re
 # ============ SEGURANÇA E VALIDAÇÕES (6) ============
-
-
-def gerar_hash(senha):
+def gerar_hash(senha_digitada):
     """Gera hash SHA-256 da senha."""
-    s_hash = hashlib.sha256(senha.encode("utf-8"))
-    senha_dex = s_hash.hexdigest()
-    return senha_dex
+
+    from hashlib import sha256
+    s_cod = senha_digitada.encode("utf-8")
+    hash_salvo = hashlib.sha256(s_cod).hexdigest()
+
 
     pass
 def verificar_senha(senha_digitada, hash_salvo):
     """Verifica se a senha corresponde ao hash."""
-
+    
     pass
 def validar_email(email):
     """Valida formato do email. Retorna (bool, msg)."""
@@ -30,11 +29,8 @@ def validar_email(email):
         return True, "E-mail válido."
     else:
         return False, "Formato de e-mail inválido. Exemplo correto: nome@email.com"
-  
-    pass
 def validar_senha(senha):
     """Valida tamanho mínimo. Retorna (bool, msg)."""
-    
     pass
 def validar_data(data):
     """Valida formato DD/MM/AAAA. Retorna (bool, msg)."""
@@ -69,7 +65,6 @@ def cadastrar_projeto(titulo, descricao, area, tecnologias, usuario_id, ano):
     conexao.close()
 
     pass
-
 def remover_projeto(projeto_id, usuario_id, tipo_usuario):
     """Remove projeto (dono ou coordenador)."""
     conexao = sqlite3.connect("qualifica_hub.db")
@@ -87,7 +82,7 @@ def remover_projeto(projeto_id, usuario_id, tipo_usuario):
     conexao.close()
 
     pass
-def buscar_projetos(area=None, ano=None):
+def buscar_projetos(termo=None, area=None):
     """Busca projetos combinando filtros."""
     conexao = sqlite3.connect("qualifica_hub.db")
     cursor=conexao.cursor()
