@@ -56,9 +56,8 @@ def criar_banco():
         andar INTEGER NOT NULL,
         capacidade INTEGER NOT NULL,
         tipo TEXT NOT NULL DEFAULT 'sala_aula',
-        ativa INTEGER NOT NULL DEFAULT 1
+        status TEXT NOT NULL DEFAULT 'ATIVA'
     );
-
     CREATE TABLE IF NOT EXISTS reservas (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         sala_id INTEGER NOT NULL,
@@ -149,7 +148,7 @@ def inserir_projeto(titulo, descrição, area, tecnologias, usuario_id, ano):
     conexao = conectar()
     cursor = conexao.cursor()
     try:
-        sql = 
+        sql =
         """ INSERT INTO projeto (titulo, descrição, area, tecnologias, usuario_id, ano)
         VALUES (?,?,?,?,?,?)"""
         cursor.execute (sql, (titulo, descrição, area, tecnologias, usuario_id, ano))
