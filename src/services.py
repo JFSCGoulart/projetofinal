@@ -77,7 +77,7 @@ def validar_data(data):
 def validar_campo(valor, nome_campo):
     """Valida se campo não está vazio."""
     
-        if valor is None or (isinstance(valor, str) and not valor.strip()):
+    if valor is None or (isinstance(valor, str) and not valor.strip()):
             print(f"O campo '{nome_campo}' não pode estar vazio.")
     pass
 # ============ AUTENTICAÇÃO (2) ============
