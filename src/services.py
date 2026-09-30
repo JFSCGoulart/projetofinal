@@ -67,6 +67,7 @@ def cadastrar_projeto(titulo, descricao, area, tecnologias, usuario_id, ano):
     )
     conexao.commit()
     conexao.close()
+
     pass
 
 def remover_projeto(projeto_id, usuario_id, tipo_usuario):
@@ -84,6 +85,7 @@ def remover_projeto(projeto_id, usuario_id, tipo_usuario):
     """, (busca, busca, busca))
     conexao.commit()
     conexao.close()
+
     pass
 def buscar_projetos(area=None, ano=None):
     """Busca projetos combinando filtros."""
@@ -100,6 +102,7 @@ def buscar_projetos(area=None, ano=None):
     for titulo, descricao, area, tecnologias, usuario_id, ano in cursor.fetchall():
             print(f"{titulo} - {descricao} - {area} - {tecnologias} - {usuario_id} - {ano}")
     conexao.close()
+    
     pass
 def obter_detalhes_projeto(projeto_id):
     """Retorna detalhes formatados de um projeto."""
