@@ -86,13 +86,13 @@ def buscar_projetos(termo=None, area=None):
     """Busca projetos combinando filtros."""
     conexao = sqlite3.connect("qualifica_hub.db")
     cursor=conexao.cursor()
-    busca=input("Insira o area: ")
+    area=input("Insira o area: ")
     busca=input("Insira o ano: ")
     cursor.execute(
     """
         SELECT * FROM projetos
         WHERE area = ? And ano = ?
-    """,(busca, busca)
+    """,(area, busca)
     )
     for titulo, descricao, area, tecnologias, usuario_id, ano in cursor.fetchall():
             print(f"{titulo} - {descricao} - {area} - {tecnologias} - {usuario_id} - {ano}")
@@ -101,7 +101,14 @@ def buscar_projetos(termo=None, area=None):
     pass
 def obter_detalhes_projeto(projeto_id):
     """Retorna detalhes formatados de um projeto."""
+    conexao = conectar()
+    cursor = conexao.cursor()
+    cursor.execute ("SELECT * FROM projeto WHERE id = ?", (projeto_id,))
+    projeto = cursor.fetchone()
+    conexao.close ()
+    return projeto
     pass
+
 def obter_ranking(limite=10):
     """Retorna top N projetos com médias."""
     pass
