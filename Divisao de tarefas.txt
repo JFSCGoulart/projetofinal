@@ -51,13 +51,13 @@ def gerar_hash(senha_digitada):			|ok
 def verificar_senha				        |ok	
 def validar_email(email):			    |ok
 
-def validar_senha(senha):			    |
-def validar_data(data):				    |   Arthur 
-def validar_campo(valor, nome_campo):	|
+def validar_senha(senha):			    |ok
+def validar_data(data):				    |ok  Arthur 
+def validar_campo(valor, nome_campo):	|ok
 
 # ============ AUTENTICAÇÃO (2) ============
-def cadastrar_usuario				|
-def fazer_login					    |
+def cadastrar_usuario				|socorro
+def fazer_login					    |socorro
 # ============ PROJETOS (5) ============
 def cadastrar_projeto				|ok
 def remover_projeto				    |ok

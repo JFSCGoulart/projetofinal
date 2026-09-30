@@ -1,46 +1,98 @@
-# src/services.py
 """Regras de negócio do sistema."""
 import hashlib
 import csv
 from datetime import datetime
 from banco import *
 from config import *
+import re
 # ============ SEGURANÇA E VALIDAÇÕES (6) ============
 def gerar_hash(senha_digitada):
-    """Gera hash SHA-256 da senha."""
+    #Gera hash SHA-256 codifica em utf e retorna uma hash em forma hexadecimal.
 
     from hashlib import sha256
-    s_cod = senha_digitada.encode("utf-8")
+    s_codidifcada = senha_digitada.encode("utf-8")
     hash_salvo = hashlib.sha256(s_cod).hexdigest()
-
+    return hash_salvo
 
     pass
 def verificar_senha(senha_digitada, hash_salvo):
-    """Verifica se a senha corresponde ao hash."""
+    #Verifica se a senha corresponde ao hash do banco.
+    conexao = sqlite3.connect(BANCO)
+    cursor = conexao.cursor
+
+    cursor.execute(""" SELECT senha FROM usuarios
+    """)
     
+    for cod in cursor.fetchall():
+        if cod==gerar_hash(senha_digitada):
+            print("Senha correta!")
+            return True
+        else:
+            print("Senha inválida!")
+            return False
+
     pass
 def validar_email(email):
     """Valida formato do email. Retorna (bool, msg)."""
     email = email.strip()
+
     padrao = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+
     if not email:
         return False, "O e-mail não pode estar vazio!"
+
     elif re.match(padrao, email):
         return True, "E-mail válido."
+
     else:
-        return False, "Formato de e-mail inválido. Exemplo correto: nome@email.com"
-def validar_senha(senha):
+        return False, "Formato de e-mail inválido. Insira uma e-mail conforme o exemplo correto: 'nome@email.com' "
+        
+def validar_senha(senha_digitada):
     """Valida tamanho mínimo. Retorna (bool, msg)."""
+
+    senha_formatada = senha_digitada.strip()
+
+    if not senha_formatada:
+        print("Campo da senha vazio!")
+        return False
+    if len(senha_formatada) < 8:
+        print("A senha deve conter no mínimo 8 caracteres.")
+        return False
+    else:
+        return True, "Senha válida"
+    
     pass
 def validar_data(data):
     """Valida formato DD/MM/AAAA. Retorna (bool, msg)."""
+
+    data_formatada = data.strip()
+    try:
+        datetime.strptime(data_formatada, "%d/%m/%Y")
+        return True, "Data válida."
+
+    except ValueError:
+        return False, "Data inválida. Use o formato DD/MM/AAAA ex: 30/09/2026."
     pass
+
 def validar_campo(valor, nome_campo):
     """Valida se campo não está vazio."""
+    
+        if valor is None or (isinstance(valor, str) and not valor.strip()):
+            print(f"O campo '{nome_campo}' não pode estar vazio.")
     pass
 # ============ AUTENTICAÇÃO (2) ============
 def cadastrar_usuario(nome, email, senha, turma, tipo="publico"):
     """Cadastra usuário. Retorna (sucesso, mensagem)."""
+    nome = input("Informe seu nome e sobre-nome:")
+    email = input("Informe seu e-mail:")
+    senha = input()
+    conexao = sqlite3.connect(BANCO)
+    cursor = conexao.cursor
+
+    cursor.execute(""" INSERT INTO usuarios 
+    """)
+
+
     pass
 def fazer_login(email, senha):
     """Realiza login. Retorna (usuario, mensagem)."""
