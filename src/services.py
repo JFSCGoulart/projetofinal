@@ -21,7 +21,14 @@ def verificar_senha(senha_digitada, hash_salvo):
     pass
 def validar_email(email):
     """Valida formato do email. Retorna (bool, msg)."""
-pass
+    email = email.strip()
+    padrao = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+    if not email:
+        return False, "O e-mail não pode estar vazio!"
+    elif re.match(padrao, email):
+        return True, "E-mail válido."
+    else:
+        return False, "Formato de e-mail inválido. Exemplo correto: nome@email.com"
 def validar_senha(senha):
     """Valida tamanho mínimo. Retorna (bool, msg)."""
     pass
