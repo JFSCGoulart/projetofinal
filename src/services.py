@@ -86,13 +86,14 @@ def buscar_projetos(termo=None, area=None):
     """Busca projetos combinando filtros."""
     conexao = sqlite3.connect("qualifica_hub.db")
     cursor=conexao.cursor()
-    area=input("Insira o area: ")
     busca=input("Insira o ano: ")
+    area=input("Insira o area: ")
+
     cursor.execute(
     """
         SELECT * FROM projetos
         WHERE area = ? And ano = ?
-    """,(area, busca)
+    """,(busca, area)
     )
     for titulo, descricao, area, tecnologias, usuario_id, ano in cursor.fetchall():
             print(f"{titulo} - {descricao} - {area} - {tecnologias} - {usuario_id} - {ano}")
@@ -111,6 +112,35 @@ def obter_detalhes_projeto(projeto_id):
 
 def obter_ranking(limite=10):
     """Retorna top N projetos com médias."""
+    conexao = conectar()
+    cursor = conexao.cursor()
+    cursor.execute("""
+            SELECT
+                p.id,
+                p.titulo AS projeto,
+                u.nome AS autor,
+                COUNT(a.id) AS total_avaliacoes,
+                ROUND(AVG(a.nota), 2) AS media_notas
+
+            FROM projeto p
+
+            INNER JOIN usuarios u
+                ON p.usuario_id = u.id
+
+            INNER JOIN avaliacoes a
+                ON p.id = a.projeto_id
+
+            GROUP BY
+                p.id,
+                p.titulo,
+                u.nome
+
+            ORDER BY
+                media_notas DESC,
+                total_avaliacoes DESC;
+        """)
+    conexao.close ()
+    return projeto
     pass
 # ============ AVALIAÇÕES (1) ============
 def avaliar_projeto(usuario_id, projeto_id, nota, comentario):
