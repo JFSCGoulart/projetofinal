@@ -144,33 +144,91 @@ def atualizar_tipo_usuario(usuario_id, novo_tipo):
     return atualizar_tipo_usuario
 
 # ============ PROJETOS (7) ============
-def inserir_projeto(titulo, descricao, area, tecnologias, usuario_id, ano):
+def inserir_projeto(titulo, descrição, area, tecnologias, usuario_id, ano):
     """Insere projeto. Retorna ID ou None."""
-    pass
+    conexao = conectar()
+    cursor = conexao.cursor()
+    try:
+        sql = 
+        """ INSERT INTO projeto (titulo, descrição, area, tecnologias, usuario_id, ano)
+        VALUES (?,?,?,?,?,?)"""
+        cursor.execute (sql, (titulo, descrição, area, tecnologias, usuario_id, ano))
+        conexao.commit()
+        return cursor.lastrowid
+    except Exception as erro:
+        print("Erro ao inserir projeto: ", erro)
+        return None
+    
 
 def buscar_projeto_por_id(projeto_id):
     """Retorna projeto (tupla) ou None."""
-    pass
+    conexao = conectar()
+    cursor = conexao.cursor()
+    try: 
+        sql = cursor.execute(sql, projeto_id)
+        return cursor.fetchone()
+    except Exception as erro:
+        print("Erro ao buscar projeto:", erro)
+        return None
 
 def listar_projetos():
     """Lista todos os projetos."""
-    pass
+    conexao = conectar()
+    cursor = conexao.cursor()
+    try: 
+        sql = cursor.execute(sql)
+        return cursor.fetchall()
+    except Exception as erro:
+        print("Erro ao listar projetos:", erro)
+        return []
 
 def listar_projetos_por_usuario(usuario_id):
     """Lista projetos de um usuário."""
-    pass
+    conexao = conectar()
+    cursor = conexao.cursor()
+    try: 
+        sql = cursor.execute(sql, usuario_id,)
+        return cursor.fetchall
+    except Exception as erro:
+        print("Erro ao listar projetos do usuario:", erro)
+        return []
 
 def atualizar_projeto(projeto_id, titulo, descricao, area, tecnologias, a):
     """Atualiza dados de um projeto."""
-    pass
+    conexao = conectar()
+    cursor = conexao.cursor()
+    try:
+        sql = cursor.execute (sql, (titulo, descrição, area, tecnologias, ano, projeto_id))
+        conexao.commit()
+        return cursor.rowcount > 0 
+    except Exception as erro:
+        print ("Erro ao atualizar projeto:", erro)
+        return False
+
 
 def deletar_projeto(projeto_id):
     """Remove um projeto."""
-    pass
+    try:
+        cursor = conexao.cursor()
+        sql = cursor.execute(sql, projeto_id,)
+        conexao.commit()
+        return cursor.rowcount > 0 
+    except Exception as erro:
+        print ("Erro ao deletar projeto:", erro)
+        return False
 
 def buscar_projetos_por_termo(termo):
     """Busca por título OU tecnologia (LIKE)."""
-    pass
+    try: 
+        cursor = conexao.cursor()
+        sql = busca = f"%{termo}%"
+        cursor.execute(sql, busca, busca)
+        return cursor.fetchall()
+    except Exception as erro:
+        print ("Erro ao buscar projetos:", erro)
+        return []
+
+
 
 # ============ AVALIAÇÕES (5) ============
 def inserir_avaliacao(usuario_id, projeto_id, nota, comentario):
