@@ -450,4 +450,6 @@ def inserir_dados_teste():
     finally:
         conexao.close()
 
+criar_banco()
+inserir_dados_teste()
 
