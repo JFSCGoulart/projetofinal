@@ -56,7 +56,7 @@ def criar_banco():
         andar INTEGER NOT NULL,
         capacidade INTEGER NOT NULL,
         tipo TEXT NOT NULL DEFAULT 'sala_aula',
-        ativa INTEGER NOT NULL DEFAULT 1
+        status TEXT NOT NULL DEFAULT 'ATIVA'
     );
 
     CREATE TABLE IF NOT EXISTS reservas (
