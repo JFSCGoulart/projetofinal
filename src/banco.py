@@ -465,7 +465,26 @@ def menu_consulta():
 
 def listar_reservas_usuario(usuario_id):
     """Lista reservas ativas de um usuário."""
-    pass
+
+def listar_reservas_usuario(usuario_id):
+ 
+    conexao = conectar()
+    cursor = conexao.cursor()
+    cursor.execute(
+        """
+        SELECT id, data_reserva, status 
+        FROM reservas 
+        WHERE usuario_id = ? AND status = 'ativo'
+        """, 
+        (usuario_id,)
+    )
+                
+        
+    resultado = cursor.fetchall() 
+    
+    conexao.close()
+
+    return resultado
 
 def listar_reservas_por_data(data):
     """Lista reservas de uma data."""
