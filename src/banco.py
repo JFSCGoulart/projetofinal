@@ -354,7 +354,7 @@ def inserir_sala(nome, andar, capacidade, tipo):
     conexao.commit()
     conexao.close()
 
-def buscar_sala_por_id(sala_id):
+def buscar_sala_por_id():
     """Retorna dados de uma sala."""
     conexao = sqlite3.connect(BANCO)
     cursor=conexao.cursor()
@@ -363,13 +363,14 @@ def buscar_sala_por_id(sala_id):
 
     cursor.execute(
     """
-        SELECT * FROM sala
-        WHERE id = ?
-    """,(busca)
+        SELECT * FROM salas
+        WHERE nome = ?
+    """,(busca,)
     )
-    for nome, andar, capacidade, tipo in cursor.fetchall():
-            print(f"ID de Sala:{id}\n - Nome: {nome}\n - Andar: {andar}\n - Capacidade: {capacidade}\n - Status: {status}")
+    for id, nome, andar, capacidade, tipo, ativa in cursor.fetchall():
+            print(f"ID de Sala:{id}\n - Nome: {nome}\n - Andar: {andar}\n - Capacidade: {capacidade}\n - Tipo: {tipo}\n - Status: {ativa}")
     conexao.close()
+
 
 def listar_salas():
     """Lista todas as salas ativas."""
@@ -446,6 +447,8 @@ def verificar_disponibilidade(sala_id, data, horario):
         conexao.close()
 
 def menu_consulta():
+    conexao=conectar()
+    cursor=conexao.cursor()
     while True:
         print("\n" + "*" * 40)
         print("CONSULTA DE DISPONIBILIDADE DE SALAS")
@@ -459,9 +462,15 @@ def menu_consulta():
             break
         elif opcao == "1":
             sala_id = input("Digite o ID da sala: ")
-            data = input("Digite a data (AAAA-MM-DD): ")
-            horario = input("Digite o horário (HH:MM): ")
-
+            cursor.execute(
+                    """
+                    SELECT *  FROM salas
+                    where id = ?
+                    """, (int(sala_id),)
+            )
+            for id, nome, andar, capacidade, tipo, ativa in cursor.fetchall():
+                print(f"ID de Sala:{id}\n - Nome: {nome}\n - Andar: {andar}\n - Capacidade: {capacidade}\n - Tipo: {tipo}\n - Status: {"Vazio" if ativa==0 else "Preenchida"}")
+            conexao.close()
 
 
 
