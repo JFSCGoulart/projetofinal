@@ -2,9 +2,9 @@
 """Todas as operações de banco de dados."""
 from config import BANCO
 import sqlite3
-# ============ CONEXÃO ============
+# ============ conexao ============
 def conectar():
-    """Abre conexão com o banco."""
+    """Abre conexao com o banco."""
     return sqlite3.connect(BANCO)
 def criar_banco():
     """Executa a criação das tabelas."""
@@ -192,12 +192,12 @@ def listar_projetos_por_usuario(usuario_id):
         print("Erro ao listar projetos do usuario:", erro)
         return []
 
-def atualizar_projeto(projeto_id, titulo, descricao, area, tecnologias, a):
+def atualizar_projeto(projeto_id, titulo, descricao, area, tecnologias, ano):
     """Atualiza dados de um projeto."""
     conexao = conectar()
     cursor = conexao.cursor()
     try:
-        sql = cursor.execute (sql, (titulo, descrição, area, tecnologias, ano, projeto_id))
+        sql = cursor.execute (sql, (titulo, descricao, area, tecnologias, ano, projeto_id))
         conexao.commit()
         return cursor.rowcount > 0 
     except Exception as erro:
@@ -272,14 +272,14 @@ def listar_avaliacoes_projeto(projeto_id):
     """, (projeto_id,))
 
     avaliacoes = cursor.fetchall()
-    conexão.close()
+    conexao.close()
 
     return avaliacoes
 
 
 def ja_avaliou(usuario_id, projeto_id):
     """Verifica se o usuário já avaliou."""
-    conexão= conectar()
+    conexao= conectar()
     cursor= conexao.cursor()
 
     cursor.execute("""
@@ -290,15 +290,15 @@ def ja_avaliou(usuario_id, projeto_id):
     """, (usuario_id, projeto_id))
 
     resultado= cursor.fetchone()
-    conexão.close()
+    conexao.close()
 
     return resultado is not None
 
 
 def media_projeto(projeto_id):
     """Retorna média das notas (float) ou 0."""
-    conexão= conectar()
-    cursor= conexão.cursor()
+    conexao= conectar()
+    cursor= conexao.cursor()
 
     cursor.execute("""
         SELECT AVG(nota)
@@ -307,15 +307,15 @@ def media_projeto(projeto_id):
     """, (projeto_id,))
 
     media= cursor.fetchone()[0]
-    conexão.close()
+    conexao.close()
 
     return float(media) if media is not None else 0.0
 
 
 def ranking_projetos(limite=10):
     """Retorna top N projetos por média."""
-    conexão= conectar()
-    cursor= conexão.cursor()
+    conexao= conectar()
+    cursor= conexao.cursor()
 
     cursor.execute("""
         SELECT projeto_id, AVG(nota) AS media, COUNT(*) AS quantidade
