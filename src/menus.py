@@ -13,8 +13,12 @@ def titulo(texto):
     pass
 
 def linha(tamanho=60):
-    """Exibe linha separadora."""
-    pass
+    """Gera uma linha horizontal com o tamanho especificado."""
+    print("-" * tamanho)
+
+# Testando a função
+linha()         # Usa o valor padrão (60 traços)
+linha(30)        # Usa um tamanho personalizado (30 traços)
 
 def mensagem(tipo, texto):
     """Exibe mensagem (tipo: 'sucesso', 'erro', 'aviso')."""
