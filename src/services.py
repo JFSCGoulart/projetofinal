@@ -197,6 +197,52 @@ def obter_ranking(limite=10):
 # ============ AVALIAÇÕES (1) ============
 def avaliar_projeto(usuario_id, projeto_id, nota, comentario):
     """Registra avaliação. Retorna (sucesso, mensagem)."""
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    if not isinstance(nota, int) or isinstance(nota, bool):
+        return False, "A nota deve ser um número inteiro."
+
+    if not 1 <= nota <= 5:
+        return False, "A nota deve estar entre 1 e 5."
+
+    try:
+        with conexao = conectar() as conexao:
+            conexao.execute("PRAGMA foreign_keys = ON")
+            cursor = conexao.cursor()
+
+            # Verifica se o usuário existe
+            cursor.execute(
+                "SELECT id FROM usuarios WHERE id = ?",
+                (usuario_id,)
+            )
+
+            if cursor.fetchone() is None:
+                return False, "Usuário não encontrado."
+
+            # Verifica se o projeto existe
+            cursor.execute(
+                "SELECT id FROM projeto WHERE id = ?",
+                (projeto_id,)
+            )
+
+            if cursor.fetchone() is None:
+                return False, "Projeto não encontrado."
+
+            # Registra a avaliação
+            cursor.execute("""
+                INSERT INTO avaliacoes
+                    (usuario_id, projeto_id, nota, comentario)
+                VALUES (?, ?, ?, ?)
+            """, (usuario_id, projeto_id, nota, comentario))
+
+            conexao.commit()
+
+            return True, "Avaliação registrada com sucesso!"
+
+    except sqlite3.Error as erro:
+        return False, f"Erro ao registrar avaliação: {erro}"
+
     pass
 # ============ SALAS (4) ============
 def listar_salas_agrupadas():

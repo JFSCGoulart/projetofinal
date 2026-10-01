@@ -89,8 +89,8 @@ def exportar_csv():				|
 # src/menus.py
 
 # ============ AUXILIARES (4) ============
-def limpar_tela():                      |
-def titulo(texto):                      |
+def limpar_tela():                      |  Thiago
+def titulo(texto):                      | 
 def linha(tamanho=60):                  |
 def mensagem(tipo, texto):              |
 
