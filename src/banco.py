@@ -232,23 +232,101 @@ def buscar_projetos_por_termo(termo):
 # ============ AVALIAÇÕES (5) ============
 def inserir_avaliacao(usuario_id, projeto_id, nota, comentario):
     """Insere avaliação. Retorna True/False."""
-    pass
+    if ja_avaliou(usuario_id, projeto_id):
+        return False
+
+    if not 1 <= nota <= 5:
+        return False
+
+    try:
+        conexao= conectar ()
+        cursor= conexao.cursor ()
+
+        cursor.execute("""
+            INSERT INTO avaliacoes
+            (usuario_id, projeto_id, nota, comentario)
+            VALUES (?, ?, ?, ?)
+        """, (usuario_id, projeto_id, nota, comentario))
+
+        conexao.commit()
+        conexao.close()
+
+        return True
+
+    except sqlite3.Error:
+        return False
+
 
 def listar_avaliacoes_projeto(projeto_id):
     """Lista avaliações de um projeto."""
-    pass
+    conexao= conectar()
+    cursor= conexao.cursor()
+
+    cursor.execute("""
+        SELECT usuario_id, nota, comentario
+        FROM avaliacoes
+        WHERE projeto_id = ?
+        ORDER BY rowid DESC
+    """, (projeto_id,))
+
+    avaliacoes = cursor.fetchall()
+    conexão.close()
+
+    return avaliacoes
+
 
 def ja_avaliou(usuario_id, projeto_id):
     """Verifica se o usuário já avaliou."""
-    pass
+    conexão= conectar()
+    cursor= conexao.cursor()
+
+    cursor.execute("""
+        SELECT 1
+        FROM avaliacoes
+        WHERE usuario_id = ? AND projeto_id = ?
+        LIMIT 1
+    """, (usuario_id, projeto_id))
+
+    resultado= cursor.fetchone()
+    conexão.close()
+
+    return resultado is not None
+
 
 def media_projeto(projeto_id):
     """Retorna média das notas (float) ou 0."""
-    pass
+    conexão= conectar()
+    cursor= conexão.cursor()
+
+    cursor.execute("""
+        SELECT AVG(nota)
+        FROM avaliacoes
+        WHERE projeto_id = ?
+    """, (projeto_id,))
+
+    media= cursor.fetchone()[0]
+    conexão.close()
+
+    return float(media) if media is not None else 0.0
+
 
 def ranking_projetos(limite=10):
     """Retorna top N projetos por média."""
-    pass
+    conexão= conectar()
+    cursor= conexão.cursor()
+
+    cursor.execute("""
+        SELECT projeto_id, AVG(nota) AS media, COUNT(*) AS quantidade
+        FROM avaliacoes
+        GROUP BY projeto_id
+        ORDER BY media DESC
+        LIMIT ?
+    """, (limite,))
+
+    ranking= cursor.fetchall()
+    conexao.close()
+
+    return ranking
 
 # ============ SALAS (5) ============
 def inserir_sala(nome, andar, capacidade, tipo):
