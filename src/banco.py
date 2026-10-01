@@ -490,8 +490,6 @@ def listar_reservas_usuario(usuario_id):
 
 def listar_reservas_por_data(data):
     """Lista reservas de uma data."""
-
-def listar_reserva_data(data_id):
     conexao = conectar()
     cursor = conexao.cursor()
     
@@ -510,7 +508,20 @@ def listar_reserva_data(data_id):
 
 def listar_todas_reservas():
     """Lista todas as reservas (coordenador)."""
-    pass
+ 
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute ("""SELECT * FROM reserva""",(data, horario, motivo,status ))
+
+    listar_todas_reservas=cursor.resultado()
+    conexao.close()
+
+    return todas_reservas
+
+    conexao.commit()
+    conexao.close()
+
 
 def cancelar_reserva(reserva_id):
     """Muda status para 'cancelada'."""
