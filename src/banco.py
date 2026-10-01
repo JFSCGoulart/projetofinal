@@ -253,7 +253,7 @@ def ranking_projetos(limite=10):
 # ============ SALAS (5) ============
 def inserir_sala(nome, andar, capacidade, tipo):
     """Insere nova sala (coordenador)."""
-    conexao = connect.()
+    conexao = sqlite3.connect(BANCO)
     cursor= conexao.cursor()
     for nome, andar, capacidade, tipo in cursor.fetchall():
         if inserir_sala=="coordenador":
@@ -276,7 +276,7 @@ def inserir_sala(nome, andar, capacidade, tipo):
 
 def buscar_sala_por_id(sala_id):
     """Retorna dados de uma sala."""
-    conexao = conectar()
+    conexao = sqlite3.connect(BANCO)
     cursor=conexao.cursor()
 
     busca=input("Insira a sala: ")
@@ -284,16 +284,16 @@ def buscar_sala_por_id(sala_id):
     cursor.execute(
     """
         SELECT * FROM sala
-        WHERE email = ?
+        WHERE id = ?
     """,(busca)
     )
     for nome, andar, capacidade, tipo in cursor.fetchall():
-            print(f"{nome} - {andar} - {capacidade} - {tipo}")
+            print(f"ID de Sala:{id}\n - Nome: {nome}\n - Andar: {andar}\n - Capacidade: {capacidade}\n - Status: {status}")
     conexao.close()
 
 def listar_salas():
     """Lista todas as salas ativas."""
-    conexao = conectar()
+    conexao = sqlite3.connect(BANCO)
     cursor = conexao.cursor()
     cursor.execute ("SELECT * FROM sala")
     sala = cursor.fetchall()
@@ -302,9 +302,9 @@ def listar_salas():
 
 def listar_salas_por_andar(andar):
     """Lista salas de um andar."""
-    conexao = conectar()
+    conexao = sqlite3.connect(BANCO)
     cursor = conexao.cursor()
-    cursor.execute ("SELECT * FROM sala")
+    cursor.execute ("""SELECT * FROM sala""")
     sala = cursor.fetchall()
     conexao.close()
     return sala
@@ -314,10 +314,10 @@ def desativar_sala(sala_id):
     conexao = conectar()
     cursor=conexao.cursor()
 
-    busca=input("Sala: ")
+    busca=input("Desativar sala(ID): ")
     cursor.execute("""
         DELETE FROM sala
-        WHERE nome=?
+        WHERE id =?
     """, (busca,))
     conexao.commit()
     conexao.close()
@@ -325,14 +325,14 @@ def desativar_sala(sala_id):
 
 # ============ RESERVAS (6) ============
 def inserir_reserva(sala_id, usuario_id, data, horario, motivo):
-    conexao=conectar()
+    conexao=sqlite3.connect(BANCO)
     cursor=conexao.cursor()
 
-    sala_id=input("sala_id: ")
-    usuario_id=input("usuario_id: ")
-    data=input("data: ")
-    horario=input("horario: ")
-    motivo=input("motivo: ")
+    sala_id=input("Sala Id: ")
+    usuario_id=input("Usario Id: ")
+    data=input("Data: ")
+    horario=input("Horario: ")
+    motivo=input("Motivo: ")
 
     cursor.execute(
         """
@@ -445,7 +445,7 @@ def inserir_dados_iniciais():
 
 
 def inserir_dados_teste():
-    conexao = conectar()
+    conexao = sqlite3.connect(BANCO)
     cursor = conexao.cursor()
 
     try:
