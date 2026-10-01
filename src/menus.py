@@ -3,32 +3,65 @@
 from services import *
 from models import Sistema
 from config import AREAS_PROJETO, HORARIOS, ANDARES
+import os
 # ============ AUXILIARES (4) ============
 def limpar_tela():
     """Limpa o terminal."""
-    pass
-
+    os.system("cls" if os.name == "nt" else "clear")
+    
 def titulo(texto):
     """Exibe título formatado."""
-    pass
+    linha()
+    print(texto.center(60))
+    linha()
+    
 
 def linha(tamanho=60):
     """Gera uma linha horizontal com o tamanho especificado."""
     print("-" * tamanho)
 
 # Testando a função
-linha()         # Usa o valor padrão (60 traços)
-linha(30)        # Usa um tamanho personalizado (30 traços)
+    linha()         # Usa o valor padrão (60 traços)
+    linha(30)        # Usa um tamanho personalizado (30 traços)
+
 
 def mensagem(tipo, texto):
     """Exibe mensagem (tipo: 'sucesso', 'erro', 'aviso')."""
+    icones = {"sucesso": "[OK] ", "erro": "[ERRO] ", "aviso": "[!] "}
+    print(f"{icones.get(tipo, '')}{texto}")
     pass
 
 # ============ MENU PRINCIPAL (3) ============
 def menu_principal(sistema):
     """Menu inicial do sistema."""
-    pass
+    while True:
+        limpar_tela()
+        titulo("SISTEMA DE PROJETOS E RESERVAS")
+        print("1 - Login")
+        print("2 - Cadastro")
+        print("3 - Buscar projetos (público)")
+        print("4 - Ver salas")
+        print("5 - Ranking de projetos")
+        print("0 - Sair")
+        op = input("Escolha: ").strip()
 
+        match op:
+            case "1":
+                menu_login(sistema)
+            case "2":
+                menu_cadastro()
+            case "3":
+                menu_buscar_publico()
+            case "4":
+                menu_ver_salas()
+            case "5":
+                ranking_projetos()
+            case "0":
+                mensagem("aviso", "Saindo...")
+                break
+            case _:
+                mensagem("erro", "Opção inválida.")
+                
 def menu_visitante():
     """Menu para quem não fez login."""
     pass
