@@ -251,26 +251,33 @@ def listar_salas_agrupadas():
 def cadastrar_sala(nome, andar, capacidade, tipo):
     """Cadastra nova sala (coordenador)."""
     pass
-def desativar_sala(sala_id):
+def desativar_sala(sala_id,usuario_id):
     """Desativa sala (coordenador)."""
     conexao = sqlite3.connect(BANCO)
     cursor = conexao.cursor
-    
-    cursor.execute(""" comando para selecionar cordenador
 
+    cursor.execute("""SELECT tipo FROM usuarios WHERE id = ?""", (usuario_id,))
+    resultado_usuario = cursor.fetchone()
+    if not resultado_usuario:
+        return "Erro: Usuário operador não encontrado."
+    tipo_usuario = resultado_usuario[0]
+    tipo_permitido = "coordenador"
 
-    """)
-    confirmacao = input(f"Deseja realmente desativa a seguinte sala: {sala_id}???\nDigite SIM ou NÃO: ").upper()
+    if tipo_usuario==tipo_permitido:
+
+        confirmacao = input(f"Deseja realmente desativa a seguinte sala: {id_sala}???\nDigite SIM ou NÃO: ").upper()
     
-    if confirmacao == "SIM":
-        cursor.execute("""
+        if confirmacao == "SIM":
+            cursor.execute("""
             UPDATE salas
             SET = "DESATIVADA"
             WHERE status = "ATIVA"
             """)
+            print(f"Sala {sala_id} teve seu status alterado de ATIVA para ---> DESATIVADA")
         conexao.commit()
         conexao.close()    
     else:
+
         print("Nenhuma ateração realizada.")
         conexao.close()
     pass
