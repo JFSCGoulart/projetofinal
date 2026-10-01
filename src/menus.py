@@ -14,7 +14,7 @@ def titulo(texto):
     linha()
     print(texto.center(60))
     linha()
-    
+        
 
 def linha(tamanho=60):
     """Gera uma linha horizontal com o tamanho especificado."""
@@ -29,7 +29,7 @@ def mensagem(tipo, texto):
     """Exibe mensagem (tipo: 'sucesso', 'erro', 'aviso')."""
     icones = {"sucesso": "[OK] ", "erro": "[ERRO] ", "aviso": "[!] "}
     print(f"{icones.get(tipo, '')}{texto}")
-    pass
+    
 
 # ============ MENU PRINCIPAL (3) ============
 def menu_principal(sistema):

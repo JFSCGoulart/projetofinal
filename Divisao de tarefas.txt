@@ -95,12 +95,12 @@ def linha(tamanho=60):                  |
 def mensagem(tipo, texto):              |
 
 # ============ MENU PRINCIPAL (3) ============
-def menu_principal(sistema):            |
-def menu_visitante():                   | 
+def menu_principal(sistema):            | Fernando
+def menu_visitante():                   | Rodrigo
 def menu_buscar_publico():              |
 
 # ============ LOGIN / CADASTRO (2) ============
-def menu_cadastro():                    |   Thiago
+def menu_cadastro():                    |   Rodrigo
 def menu_login(sistema):                |
 
 # ============ MENUS POR TIPO (3) ============
