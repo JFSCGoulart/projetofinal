@@ -207,8 +207,9 @@ def atualizar_projeto(projeto_id, titulo, descricao, area, tecnologias, a):
 
 def deletar_projeto(projeto_id):
     """Remove um projeto."""
+    conexao = conectar()
+    cursor = conexao.cursor()
     try:
-        cursor = conexao.cursor()
         sql = cursor.execute(sql, projeto_id,)
         conexao.commit()
         return cursor.rowcount > 0 
@@ -218,8 +219,9 @@ def deletar_projeto(projeto_id):
 
 def buscar_projetos_por_termo(termo):
     """Busca por título OU tecnologia (LIKE)."""
+    conexao = conectar()
+    cursor = conexao.cursor()
     try: 
-        cursor = conexao.cursor()
         sql = busca = f"%{termo}%"
         cursor.execute(sql, busca, busca)
         return cursor.fetchall()
