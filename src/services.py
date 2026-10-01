@@ -207,7 +207,7 @@ def avaliar_projeto(usuario_id, projeto_id, nota, comentario):
         return False, "A nota deve estar entre 1 e 5."
 
     try:
-        with conexao = conectar() as conexao:
+        with conectar() as conexao:
             conexao.execute("PRAGMA foreign_keys = ON")
             cursor = conexao.cursor()
 
