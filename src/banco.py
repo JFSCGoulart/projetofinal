@@ -8,9 +8,9 @@ def conectar():
     return sqlite3.connect(BANCO)
 def criar_banco():
     """Executa a criação das tabelas."""
-    conexao = conectar()
+    conexao = sqlite3.connect(BANCO)
     cursor= conexao.cursor()
-    cursor.executescript("""
+    cursor.execute("""
     CREATE TABLE IF NOT EXISTS usuarios (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT NOT NULL,
@@ -84,14 +84,14 @@ def criar_banco():
         
 # ============ USUÁRIOS (5) ============
 def inserir_usuario(nome, email, senha_hash, turma, tipo):
-    conexao = conectar()
+    conexao = sqlite3.connect(BANCO)
     cursor= conexao.cursor()
     
-    nome=input("Nome: ")
-    email=input("email: ")
-    senha_hash=input("senha_hash: ")
-    turma=input("turma: ")
-    tipo=input("tipo: ")
+    nome=input("Informe seu nome: ")
+    email=input("Insira seu e-mail: ")
+    senha_hash=input("Digite uma senha: ")
+    turma=input("Informe a turma: ")
+    tipo=input("Tipo: ")
     cursor.execute(
         """
         INSERT INTO usuarios (nome, email, senha, turma, tipo) VALUES(?,?,?,?,?)
@@ -100,7 +100,7 @@ def inserir_usuario(nome, email, senha_hash, turma, tipo):
     conexao.commit()
     conexao.close()
 def buscar_usuario_por_email(email):
-    conexao = conectar()
+    conexao = sqlite3.connect(BANCO)
     cursor=conexao.cursor()
 
     busca=input("Insira o email: ")
@@ -117,19 +117,21 @@ def buscar_usuario_por_email(email):
 
 def buscar_usuario_por_id(usuario_id):
     """Retorna usuário (tupla) ou None."""
-    conexao = conectar()
+    conexao = sqlite3.connect(BANCO)
     cursor = conexao.cursor()
-    cursor.execute ("SELECT * FROM usuarios WHERE id = ?", (usuario_id,))
+    cursor.execute ("""SELECT * FROM usuarios WHERE id = ?""", (usuario_id,))
     usuario = cursor.fetchone()
     conexao.close ()
     return usuario
 
 def listar_usuarios():
     """Lista todos os usuários."""
-    conexao = conectar()
+    conexao = sqlite3.connect(BANCO)
     cursor = conexao.cursor()
     cursor.execute ("SELECT * FROM usuarios")
     usuarios = cursor.fetchall()
+
+    print(f"Lista de usuários: {usuarios}")
     conexao.close()
     return usuarios
 
@@ -251,7 +253,7 @@ def ranking_projetos(limite=10):
 # ============ SALAS (5) ============
 def inserir_sala(nome, andar, capacidade, tipo):
     """Insere nova sala (coordenador)."""
-    conexao = conectar()
+    conexao = connect.()
     cursor= conexao.cursor()
     for nome, andar, capacidade, tipo in cursor.fetchall():
         if inserir_sala=="coordenador":
