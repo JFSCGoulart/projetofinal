@@ -56,8 +56,9 @@ def criar_banco():
         andar INTEGER NOT NULL,
         capacidade INTEGER NOT NULL,
         tipo TEXT NOT NULL DEFAULT 'sala_aula',
-        status TEXT NOT NULL DEFAULT 'ATIVA'
+        ativa INTEGER NOT NULL DEFAULT 1
     );
+
     CREATE TABLE IF NOT EXISTS reservas (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         sala_id INTEGER NOT NULL,
@@ -148,7 +149,7 @@ def inserir_projeto(titulo, descrição, area, tecnologias, usuario_id, ano):
     conexao = conectar()
     cursor = conexao.cursor()
     try:
-        sql =
+        sql = 
         """ INSERT INTO projeto (titulo, descrição, area, tecnologias, usuario_id, ano)
         VALUES (?,?,?,?,?,?)"""
         cursor.execute (sql, (titulo, descrição, area, tecnologias, usuario_id, ano))
@@ -325,8 +326,26 @@ def desativar_sala(sala_id):
 
 # ============ RESERVAS (6) ============
 def inserir_reserva(sala_id, usuario_id, data, horario, motivo):
-    """Insere reserva. Retorna True/False."""
-    pass
+    conexao=conectar()
+    cursor=conexao.cursor()
+
+    sala_id=input("sala_id: ")
+    usuario_id=input("usuario_id: ")
+    data=input("data: ")
+    horario=input("horario: ")
+    motivo=input("motivo: ")
+
+    cursor.execute(
+        """
+        INSERT INTO reserva (sala_id, usuario_id, data, horario, motivo) VALUES (?,?,?,?,?)
+        """,(sala_id, usuario_id, data, horario, motivo)
+    )
+
+    conexao.commit()
+    conexao.close()
+    
+
+  
 
 def verificar_disponibilidade(sala_id, data, horario):
     """Verifica se está livre. Retorna True/False."""
@@ -341,7 +360,7 @@ def listar_reservas_por_data(data):
     pass
 
 def listar_todas_reservas():
-    """Lista todas as reservas (coordenador). teste"""
+    """Lista todas as reservas (coordenador)."""
     pass
 
 def cancelar_reserva(reserva_id):
