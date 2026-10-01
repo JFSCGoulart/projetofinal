@@ -278,15 +278,131 @@ def obter_grade_horarios(sala_id, data):
     """Retorna lista de dicts com horários e status."""
     pass
 # ============ RESERVAS (3) ============
+from src.banco import conectar
 def reservar_sala(usuario_id, sala_id, data, horario, motivo):
     """Cria reserva. Retorna (sucesso, mensagem)."""
-    pass
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    #verifica se a sala existe e está ativa
+    cursor.execute("""
+        SELECT id
+        FROM salas
+        WHERE id = ? AND status = 'ATIVA'
+    """, (sala_id,))
+
+    sala = cursor.fetchone()
+
+    if sala is None:
+        conexao.close()
+        return False, "Sala não encontrada ou está inativa."
+
+    #verifica se já existe reserva para a sala naquele horário
+    cursor.execute("""
+        SELECT id
+        FROM reservas
+        WHERE sala_id = ?
+        AND data = ?
+        AND horario = ?
+        AND status = 'ativa'
+    """, (sala_id, data, horario))
+
+    reserva_existente = cursor.fetchone()
+
+    if reserva_existente is not None:
+        conexao.close()
+        return False, "A sala já está reservada nesse horário."
+
+    #cria a reserva
+    cursor.execute("""
+        INSERT INTO reservas
+        (sala_id, usuario_id, data, horario, motivo)
+        VALUES (?, ?, ?, ?, ?)
+    """, (sala_id, usuario_id, data, horario, motivo))
+
+    conexao.commit()
+    conexao.close()
+
+    return True, "Reserva realizada com sucesso."
+
+    
 def cancelar_reserva(reserva_id, usuario_id, tipo_usuario):
     """Cancela reserva (dono ou coordenador)."""
-    pass
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    #procura a reserva
+    cursor.execute("""
+        SELECT usuario_id, status
+        FROM reservas
+        WHERE id = ?
+    """, (reserva_id,))
+
+    reserva = cursor.fetchone()
+
+    if reserva is None:
+        conexao.close()
+        return False, "Reserva não encontrada."
+
+    dono_id = reserva[0]
+    status = reserva[1]
+
+    #verifica se já está cancelada
+    if status != "ativa":
+        conexao.close()
+        return False, "Essa reserva já foi cancelada."
+
+    #verifica permissão
+    if dono_id != usuario_id and tipo_usuario != "coordenador":
+        conexao.close()
+        return False, "Você não tem permissão para cancelar esta reserva."
+
+    #cancela
+    cursor.execute("""
+        UPDATE reservas
+        SET status = 'cancelada'
+        WHERE id = ?
+    """, (reserva_id,))
+
+    conexao.commit()
+    conexao.close()
+
+    return True, "Reserva cancelada com sucesso."
+
+
+
 def listar_minhas_reservas(usuario_id):
     """Lista reservas ativas do usuário."""
-    pass
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT
+            reservas.id,
+            salas.nome,
+            salas.andar,
+            reservas.data,
+            reservas.horario,
+            reservas.motivo
+        FROM reservas
+        JOIN salas ON salas.id = reservas.sala_id
+        WHERE reservas.usuario_id = ?
+        AND reservas.status = 'ativa'
+        ORDER BY reservas.data, reservas.horario
+    """, (usuario_id,))
+
+    reservas = cursor.fetchall()
+
+    conexao.close()
+
+    return reservas
+
+
+
+
 # ============ RELATÓRIOS (1) ============
 def exportar_csv():
     """Exporta projetos e reservas para CSV."""
