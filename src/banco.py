@@ -341,7 +341,7 @@ def listar_reservas_por_data(data):
     pass
 
 def listar_todas_reservas():
-    """Lista todas as reservas (coordenador)."""
+    """Lista todas as reservas (coordenador). teste"""
     pass
 
 def cancelar_reserva(reserva_id):
