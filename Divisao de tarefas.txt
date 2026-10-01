@@ -100,7 +100,7 @@ def menu_visitante():                   |
 def menu_buscar_publico():              |
 
 # ============ LOGIN / CADASTRO (2) ============
-def menu_cadastro():                    |
+def menu_cadastro():                    |   Thiago
 def menu_login(sistema):                |
 
 # ============ MENUS POR TIPO (3) ============
