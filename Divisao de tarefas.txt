@@ -11,13 +11,13 @@ def listar_usuarios():						                |ok
 def atualizar_tipo_usuario(usuario_id, novo_tipo):		    |ok
 
 # ============ PROJETOS (7) ============
-def inserir_projeto			        |
-def buscar_projeto_por_id		    |
-def listar_projetos():			    |
-def listar_projetos_por_usuario		|		Thainá
-def atualizar_projeto			    |
-def deletar_projeto			        |
-def buscar_projetos_por_termo		|
+def inserir_projeto			        |ok
+def buscar_projeto_por_id		    |ok
+def listar_projetos():			    |ok
+def listar_projetos_por_usuario		|ok		Thainá
+def atualizar_projeto			    |ok
+def deletar_projeto			        |ok
+def buscar_projetos_por_termo		|ok
 
 # ============ AVALIAÇÕES (5) ============
 def inserir_avaliacao			    |
@@ -78,7 +78,7 @@ def obter_grade_horarios		|
 
 # ============ RESERVAS (3) ============
 def reservar_sala				|
-def cancelar_reserva			|
+def cancelar_reserva			| 	Thainá
 def listar_minhas_reservas		|
 
 # ============ RELATÓRIOS (1) ============

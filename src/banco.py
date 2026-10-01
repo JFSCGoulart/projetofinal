@@ -148,18 +148,15 @@ def inserir_projeto(titulo, descrição, area, tecnologias, usuario_id, ano):
     """Insere projeto. Retorna ID ou None."""
     conexao = conectar()
     cursor = conexao.cursor()
-    try:
-        sql = 
-        """ INSERT INTO projeto (titulo, descrição, area, tecnologias, usuario_id, ano)
-        VALUES (?,?,?,?,?,?)"""
-        cursor.execute (sql, (titulo, descrição, area, tecnologias, usuario_id, ano))
+    try:    
+        cursor.execute (""" INSERT INTO projeto (titulo, descrição, area, tecnologias, usuario_id, ano)
+                VALUES (?,?,?,?,?,?)""", (titulo, descrição, area, tecnologias, usuario_id, ano))
         conexao.commit()
         return cursor.lastrowid
     except Exception as erro:
         print("Erro ao inserir projeto: ", erro)
         return None
     
-
 def buscar_projeto_por_id(projeto_id):
     """Retorna projeto (tupla) ou None."""
     conexao = conectar()
