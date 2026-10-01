@@ -76,10 +76,10 @@ def cadastrar_sala				|
 def desativar_sala				|EM CONSTRUÇÃO (by Arthur)
 def obter_grade_horarios		|
 
-# ============ RESERVAS (3) ============
-def reservar_sala				|
-def cancelar_reserva			| 	Thainá
-def listar_minhas_reservas		|
+# ============ RESERVAS (3) ============ THAYNA OK
+def reservar_sala				| OK
+def cancelar_reserva			| OK 
+def listar_minhas_reservas		| OK
 
 # ============ RELATÓRIOS (1) ============
 def exportar_csv():				|
@@ -117,10 +117,10 @@ def menu_avaliar(sistema):              |
 def menu_ver_salas():                   |
 def menu_grade_sala():                  |
 
-# ============ RESERVAS (3) ============ THAYNÁ
-def menu_reservar_sala(sistema):        | OK 
-def menu_minhas_reservas(sistema):      | OK
-def menu_cancelar_reserva(sistema):     | OK 
+# ============ RESERVAS (3) ============ 
+def menu_reservar_sala(sistema):        | 
+def menu_minhas_reservas(sistema):      | 
+def menu_cancelar_reserva(sistema):     | 
 
 # ============ COORDENADOR (2) ============
 def menu_gerenciar_salas(sistema):      |
