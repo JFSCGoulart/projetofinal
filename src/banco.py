@@ -325,14 +325,14 @@ def desativar_sala(sala_id):
 
 # ============ RESERVAS (6) ============
 def inserir_reserva(sala_id, usuario_id, data, horario, motivo):
-    conexao=conectar()
+    conexao=sqlite3.connect(BANCO)
     cursor=conexao.cursor()
 
-    sala_id=input("sala_id: ")
-    usuario_id=input("usuario_id: ")
-    data=input("data: ")
-    horario=input("horario: ")
-    motivo=input("motivo: ")
+    sala_id=input("Sala Id: ")
+    usuario_id=input("Usario Id: ")
+    data=input("Data: ")
+    horario=input("Horario: ")
+    motivo=input("Motivo: ")
 
     cursor.execute(
         """
@@ -410,7 +410,7 @@ def inserir_dados_iniciais():
 
 
 def inserir_dados_teste():
-    conexao = conectar()
+    conexao = sqlite3.connect(BANCO)
     cursor = conexao.cursor()
 
     try:
