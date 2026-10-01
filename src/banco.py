@@ -348,7 +348,42 @@ def inserir_reserva(sala_id, usuario_id, data, horario, motivo):
 
 def verificar_disponibilidade(sala_id, data, horario):
     """Verifica se está livre. Retorna True/False."""
-    pass
+    conexao = conectar()
+    try:
+        with conexao.cursor() as cursor:
+            # Conta quantas reservas já existem para a mesma sala, data e horário
+            query = """
+                SELECT COUNT(*) 
+                FROM reservas 
+                WHERE sala_id = ? AND data = ? AND horario = ?
+            """
+            cursor.execute(query, (sala_id, data, horario))
+            resultado = cursor.fetchone()
+            
+            # Se o contador for 0, a sala está disponível (retorna True)
+            return resultado[0] == 0
+    finally:
+        conexao.close()
+
+def menu_consulta():
+    while True:
+        print("\n" + "*" * 40)
+        print("CONSULTA DE DISPONIBILIDADE DE SALAS")
+        print("*" * 40)
+        print("1. Verificar se uma sala específica está livre")
+        print("0. Voltar")
+        
+        opcao = input("Escolha uma opção: ")
+        
+        if opcao == "0":
+            break
+        elif opcao == "1":
+            sala_id = input("Digite o ID da sala: ")
+            data = input("Digite a data (AAAA-MM-DD): ")
+            horario = input("Digite o horário (HH:MM): ")
+
+
+
 
 def listar_reservas_usuario(usuario_id):
     """Lista reservas ativas de um usuário."""
