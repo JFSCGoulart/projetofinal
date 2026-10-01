@@ -19,12 +19,12 @@ def atualizar_projeto			    |ok
 def deletar_projeto			        |ok
 def buscar_projetos_por_termo		|ok
 
-# ============ AVALIAÇÕES (5) ============
-def inserir_avaliacao			    |
-def listar_avaliacoes_projeto		|
-def ja_avaliou				        |		Nat
-def media_projeto			        |
-def ranking_projetos			    |
+# ============ AVALIAÇÕES (5) ============ NAT
+def inserir_avaliacao			    | OK
+def listar_avaliacoes_projeto		| ok
+def ja_avaliou				        | ok	Nat
+def media_projeto			        | ok
+def ranking_projetos			    | ok
 
 # ============ SALAS (5) ============
 def inserir_sala			    |so
@@ -117,10 +117,10 @@ def menu_avaliar(sistema):              |
 def menu_ver_salas():                   |
 def menu_grade_sala():                  |
 
-# ============ RESERVAS (3) ============
-def menu_reservar_sala(sistema):        |
-def menu_minhas_reservas(sistema):      |
-def menu_cancelar_reserva(sistema):     |
+# ============ RESERVAS (3) ============ THAYNÁ
+def menu_reservar_sala(sistema):        | OK 
+def menu_minhas_reservas(sistema):      | OK
+def menu_cancelar_reserva(sistema):     | OK 
 
 # ============ COORDENADOR (2) ============
 def menu_gerenciar_salas(sistema):      |
