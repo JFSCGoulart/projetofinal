@@ -68,7 +68,15 @@ def menu_visitante():
 
 def menu_buscar_publico():
     """Busca pública de projetos."""
-    pass
+
+    while True:
+    print("\n--- MENU PÚBLICO ---")
+    print("consultar projetos")
+    print("buscar por área/tecnologia")
+    print("ver rancking dos projetos")
+    print("consultar salas por andar")
+    print("voltar")
+    op=input("escolha  uma opção:")
 
 # ============ LOGIN / CADASTRO (2) ============
 
