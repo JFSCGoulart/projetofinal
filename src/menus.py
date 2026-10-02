@@ -159,7 +159,7 @@ def menu_cadastrar_projeto(sistema):
 
     sistema["projetos"].append(projeto)
 
-    print("\nProjeto cadastrado com sucesso!")
+    print("Projeto cadastrado com sucesso!\n")
 
 
 def menu_meus_projetos(sistema):
@@ -168,13 +168,13 @@ def menu_meus_projetos(sistema):
     projetos = sistema["projetos"]
 
     if not projetos:
-        print("\nNenhum projeto cadastrado.")
+        print("Nenhum projeto cadastrado\n.")
         return
 
-    print("\n===== MEUS PROJETOS =====")
+    print("===== MEUS PROJETOS =====\n")
 
     for i, projeto in enumerate(projetos, 1):
-        print(f"\n{i}. {projeto['nome']}")
+        print(f"{i}. {projeto['nome']}\n")
         print(f"   Descrição: {projeto['descricao']}")
         print(f"   Categoria: {projeto['categoria']}")
 
@@ -185,15 +185,15 @@ def menu_avaliar(sistema):
     projetos = sistema["projetos"]
 
     if not projetos:
-        print("\n Nenhum projeto para avaliar.")
+        print(" Nenhum projeto para avaliar\n.")
         return
 
-    print("\n===== PROJETOS PARA AVALIAR =====")
+    print("===== PROJETOS PARA AVALIAR =====\n")
 
     for i, projeto in enumerate(projetos, 1):
         print(f"{i}. {projeto['nome']}")
 
-    escolha = int(input("\nEscolha o projeto: "))
+    escolha = int(input("Escolha o projeto\n: "))
 
     if 1 <= escolha <= len(projetos):
         nota = float(input("Digite a nota de 0 a 10: "))
