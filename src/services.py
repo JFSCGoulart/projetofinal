@@ -247,6 +247,21 @@ def avaliar_projeto(usuario_id, projeto_id, nota, comentario):
 # ============ SALAS (4) ============
 def listar_salas_agrupadas():
     """Retorna salas agrupadas por andar."""
+    conexao = conectar()
+    cursor = conexao.cursor()
+    cursor.execute("""SELECT andar, id, nome FROM salas ORDER BY andar ASC""")
+    resultados = cursor.fetchall()
+    
+    salas_por_andar = defaultdict(list)
+    for andar, id_sala, nome in resultados:
+        salas_por_andar[andar].append({"id": id_sala, "nome": nome})
+        
+    for andar, salas in salas_por_andar.items():
+        print(f"Salas do {andar}º andar:")
+        for sala in salas:
+            print(f" - [{sala['id']}] {sala['nome']}")
+    conexao.close()
+
     pass
 def cadastrar_sala(nome, andar, capacidade, tipo):
     """Cadastra nova sala (coordenador)."""

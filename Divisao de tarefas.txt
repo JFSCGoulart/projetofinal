@@ -70,7 +70,7 @@ def obter_ranking(limite=10):		|ok
 def avaliar_projeto				| ok
 
 # ============ SALAS (4) ============
-def listar_salas_agrupadas():	|
+def listar_salas_agrupadas():	|ok Arthur
 def cadastrar_sala				|
 def desativar_sala				|ok Arthur
 def obter_grade_horarios		|
