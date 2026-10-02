@@ -108,9 +108,9 @@ def menu_professor(sistema):            | ok
 def menu_coordenador(sistema):          | ok
 
 # ============ PROJETOS (3) ============  Rodrigo
-def menu_cadastrar_projeto(sistema):    | 
-def menu_meus_projetos(sistema):        |
-def menu_avaliar(sistema):              |
+def menu_cadastrar_projeto(sistema):    | ok
+def menu_meus_projetos(sistema):        |ok
+def menu_avaliar(sistema):              |ok
 
 # ============ SALAS (2) ============     Fernando
 def menu_ver_salas():                   | ok
