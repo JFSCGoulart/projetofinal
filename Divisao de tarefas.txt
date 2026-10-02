@@ -46,29 +46,28 @@ def cancelar_reserva			|
 
 # src/services.py
 
-# ============ SEGURANÇA E VALIDAÇÕES (6) ============
+# ============ SEGURANÇA E VALIDAÇÕES (6) ============ Arthur 
 def gerar_hash(senha_digitada):			|ok
 def verificar_senha				        |ok	
 def validar_email(email):			    |ok
-
 def validar_senha(senha):			    |ok
-def validar_data(data):				    |ok  Arthur 
+def validar_data(data):				    |ok  
 def validar_campo(valor, nome_campo):	|ok
 
-# ============ AUTENTICAÇÃO (2) ============
-def cadastrar_usuario				|socorro
-def fazer_login					    |socorro
-# ============ PROJETOS (5) ============
+# ============ AUTENTICAÇÃO (2) ============ Daniel 
+def cadastrar_usuario				|socorro ok
+def fazer_login					    |socorro fazer
+
+# ============ PROJETOS (5) ============ Nilton
 def cadastrar_projeto				|ok
 def remover_projeto				    |ok
 def buscar_projetos				    |ok
 def obter_detalhes_projeto			|ok
+def obter_ranking(limite=10):		|ok
 
-def obter_ranking(limite=10):		| Nilton
 
-
-# ============ AVALIAÇÕES (1) ============
-def avaliar_projeto				|
+# ============ AVALIAÇÕES (1) ============ Nilton
+def avaliar_projeto				| ok
 
 # ============ SALAS (4) ============
 def listar_salas_agrupadas():	|
@@ -88,28 +87,28 @@ def exportar_csv():				|
 
 # src/menus.py
 
-# ============ AUXILIARES (4) ============
-def limpar_tela():                      |  Thiago
-def titulo(texto):                      | 
-def linha(tamanho=60):                  |
-def mensagem(tipo, texto):              |
+# ============ AUXILIARES (4) ============ Thiago
+def limpar_tela():                      | OK 
+def titulo(texto):                      | OK
+def linha(tamanho=60):                  | OK
+def mensagem(tipo, texto):              | OK
 
-# ============ MENU PRINCIPAL (3) ============
-def menu_principal(sistema):            | Fernando
-def menu_visitante():                   | Rodrigo
+# ============ MENU PRINCIPAL (3) ============ Fernando/Rodrigo
+def menu_principal(sistema):            | OK 
+def menu_visitante():                   | 
 def menu_buscar_publico():              |
 
-# ============ LOGIN / CADASTRO (2) ============
-def menu_cadastro():                    |   Rodrigo
-def menu_login(sistema):                |
+# ============ LOGIN / CADASTRO (2) ============ Rodrigo
+def menu_cadastro():                    |  ok
+def menu_login(sistema):                |  ok
 
 # ============ MENUS POR TIPO (3) ============
-def menu_publico(sistema):              |
-def menu_professor(sistema):            |    
-def menu_coordenador(sistema):          |
+def menu_publico(sistema):              | ok
+def menu_professor(sistema):            | ok 
+def menu_coordenador(sistema):          | ok
 
 # ============ PROJETOS (3) ============
-def menu_cadastrar_projeto(sistema):    |
+def menu_cadastrar_projeto(sistema):    | 
 def menu_meus_projetos(sistema):        |
 def menu_avaliar(sistema):              |
 
