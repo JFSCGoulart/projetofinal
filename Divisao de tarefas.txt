@@ -96,7 +96,7 @@ def mensagem(tipo, texto):              | OK
 # ============ MENU PRINCIPAL (3) ============ Fernando/Rodrigo
 def menu_principal(sistema):            | OK 
 def menu_visitante():                   | 
-def menu_buscar_publico():              |
+def menu_buscar_publico():              |ok
 
 # ============ LOGIN / CADASTRO (2) ============ Rodrigo
 def menu_cadastro():                    |  ok
