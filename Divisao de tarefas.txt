@@ -47,12 +47,12 @@ def cancelar_reserva			|ok
 # src/services.py
 
 # ============ SEGURANÇA E VALIDAÇÕES (6) ============ Arthur 
-def gerar_hash(senha_digitada):			|ok
-def verificar_senha				        |ok	
-def validar_email(email):			    |ok
-def validar_senha(senha):			    |ok
-def validar_data(data):				    |ok  
-def validar_campo(valor, nome_campo):	|ok
+def gerar_hash(senha_digitada):			|ok?
+def verificar_senha				        |ok?	
+def validar_email(email):			    |ok?
+def validar_senha(senha):			    |ok?
+def validar_data(data):				    |ok? 
+def validar_campo(valor, nome_campo):	|ok?
 
 # ============ AUTENTICAÇÃO (2) ============ Daniel 
 def cadastrar_usuario				|socorro ok
@@ -70,9 +70,9 @@ def obter_ranking(limite=10):		|ok
 def avaliar_projeto				| ok
 
 # ============ SALAS (4) ============
-def listar_salas_agrupadas():	|ok Arthur
-def cadastrar_sala				|
-def desativar_sala				|ok Arthur
+def listar_salas_agrupadas():	|ok? Arthur
+def cadastrar_sala				|ok? Arthur
+def desativar_sala				|ok? Arthur
 def obter_grade_horarios		|
 
 # ============ RESERVAS (3) ============ THAYNA OK
