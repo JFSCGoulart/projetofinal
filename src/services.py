@@ -11,13 +11,13 @@ def gerar_hash(senha_digitada):
 
     from hashlib import sha256
     s_codidifcada = senha_digitada.encode("utf-8")
-    hash_salvo = hashlib.sha256(s_cod).hexdigest()
+    hash_salvo = hashlib.sha256(s_codidifcada).hexdigest()
     return hash_salvo
 
     pass
 def verificar_senha(senha_digitada, hash_salvo):
     #Verifica se a senha corresponde ao hash do banco.
-    conexao = sqlite3.connect(BANCO)
+    conexao = conectar()
     cursor = conexao.cursor
 
     cursor.execute(""" SELECT senha FROM usuarios
@@ -86,7 +86,7 @@ def cadastrar_usuario(nome, email, senha, turma, tipo="publico"):
     nome = input("Informe seu nome e sobre-nome:")
     email = input("Informe seu e-mail:")
     senha = input()
-    conexao = sqlite3.connect(BANCO)
+    conexao = conectar()
     cursor = conexao.cursor
 
     cursor.execute(""" INSERT INTO usuarios 
@@ -274,6 +274,7 @@ def desativar_sala(sala_id,usuario_id):
             WHERE status = "ATIVA"
             """)
             print(f"Sala {sala_id} teve seu status alterado de ATIVA para ---> DESATIVADA")
+            return True
         conexao.commit()
         conexao.close()    
     else:
