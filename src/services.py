@@ -263,8 +263,40 @@ def listar_salas_agrupadas():
     conexao.close()
 
     pass
-def cadastrar_sala(nome, andar, capacidade, tipo):
-    """Cadastra nova sala (coordenador)."""
+def cadastrar_sala(nome, andar, capacidade, tipo,usuario_id ):
+    """Cadastra nova sala (Apenas para usuários do tipo 'coordenador')."""
+  
+    conexao = conectar()
+    cursor = conexao.cursor()
+    
+    cursor.execute("""SELECT tipo FROM usuarios WHERE id = ?""", (usuario_id,))
+    resultado_usuario = cursor.fetchone()
+    if not resultado_usuario:
+        return "Erro: Usuário operador não encontrado."
+    tipo_usuario = resultado_usuario[0]
+    tipo_permitido = "coordenador"
+
+    if tipo_usuario==tipo_permitido:
+            try:
+                nome= input("Informe o nome do curso:")
+                andar= int(input("Informe o número do andar:"))
+                capacidade= int(input("Informe a capacidade de alunos:"))
+                tipo_sala= "sala_aula"
+            
+                conexao.execute("""INSERT INTO salas (nome, andar, capacidade, tipo) VALUES (?, ?, ?, ?)"""
+                ,(nome, andar, capacidade, tipo_sala))
+            
+                conexao.commit() 
+                print(f"Sucesso: Sala '{nome}' cadastrada com sucesso no {andar}º andar!")
+                return True
+            
+            except Exception as e:
+            conexao.rollback()
+            print(f"Erro ao cadastrar sala: {e}")
+            return False
+            
+        finally:
+            conexao.close()
     pass
 def desativar_sala(sala_id,usuario_id):
     """Desativa sala (coordenador)."""
