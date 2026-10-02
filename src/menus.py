@@ -1,6 +1,6 @@
 # src/menus.py
 """Todos os menus e interação com o usuário."""
-from services import *
+import services
 from models import Sistema
 from config import AREAS_PROJETO, HORARIOS, ANDARES
 import os

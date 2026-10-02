@@ -1,16 +1,18 @@
 # src/banco.py
 """Todas as operações de banco de dados."""
-from config import BANCO
+from src.config import BANCO
+
 import sqlite3
+
 # ============ conexao ============
 def conectar():
     """Abre conexao com o banco."""
     return sqlite3.connect(BANCO)
 def criar_banco():
     """Executa a criação das tabelas."""
-    conexao = sqlite3.connect(BANCO)
+    conexao = conectar()
     cursor= conexao.cursor()
-    cursor.execute("""
+    cursor.executescript("""
     CREATE TABLE IF NOT EXISTS usuarios (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT NOT NULL,
@@ -84,7 +86,7 @@ def criar_banco():
         
 # ============ USUÁRIOS (5) ============
 def inserir_usuario(nome, email, senha_hash, turma, tipo):
-    conexao = sqlite3.connect(BANCO)
+    conexao = conectar()
     cursor= conexao.cursor()
     
     nome=input("Informe seu nome: ")
@@ -100,7 +102,7 @@ def inserir_usuario(nome, email, senha_hash, turma, tipo):
     conexao.commit()
     conexao.close()
 def buscar_usuario_por_email(email):
-    conexao = sqlite3.connect(BANCO)
+    conexao = conectar()
     cursor=conexao.cursor()
 
     busca=input("Insira o email: ")
@@ -117,7 +119,7 @@ def buscar_usuario_por_email(email):
 
 def buscar_usuario_por_id(usuario_id):
     """Retorna usuário (tupla) ou None."""
-    conexao = sqlite3.connect(BANCO)
+    conexao = conectar()
     cursor = conexao.cursor()
     cursor.execute ("""SELECT * FROM usuarios WHERE id = ?""", (usuario_id,))
     usuario = cursor.fetchone()
@@ -126,7 +128,7 @@ def buscar_usuario_por_id(usuario_id):
 
 def listar_usuarios():
     """Lista todos os usuários."""
-    conexao = sqlite3.connect(BANCO)
+    conexao = conectar()
     cursor = conexao.cursor()
     cursor.execute ("SELECT * FROM usuarios")
     usuarios = cursor.fetchall()
@@ -333,7 +335,7 @@ def ranking_projetos(limite=10):
 # ============ SALAS (5) ============
 def inserir_sala(nome, andar, capacidade, tipo):
     """Insere nova sala (coordenador)."""
-    conexao = sqlite3.connect(BANCO)
+    conexao = conectar()
     cursor= conexao.cursor()
     for nome, andar, capacidade, tipo in cursor.fetchall():
         if inserir_sala=="coordenador":
@@ -356,7 +358,7 @@ def inserir_sala(nome, andar, capacidade, tipo):
 
 def buscar_sala_por_id():
     """Retorna dados de uma sala."""
-    conexao = sqlite3.connect(BANCO)
+    conexao = conectar()
     cursor=conexao.cursor()
 
     busca=input("Insira a sala: ")
@@ -374,7 +376,7 @@ def buscar_sala_por_id():
 
 def listar_salas():
     """Lista todas as salas ativas."""
-    conexao = sqlite3.connect(BANCO)
+    conexao = conectar()
     cursor = conexao.cursor()
     cursor.execute ("SELECT * FROM sala")
     sala = cursor.fetchall()
@@ -383,7 +385,7 @@ def listar_salas():
 
 def listar_salas_por_andar(andar):
     """Lista salas de um andar."""
-    conexao = sqlite3.connect(BANCO)
+    conexao = conectar()
     cursor = conexao.cursor()
     cursor.execute ("""SELECT * FROM sala""")
     sala = cursor.fetchall()
@@ -406,7 +408,7 @@ def desativar_sala(sala_id):
 
 # ============ RESERVAS (6) ============
 def inserir_reserva(sala_id, usuario_id, data, horario, motivo):
-    conexao=sqlite3.connect(BANCO)
+    conexao=conectar()
     cursor=conexao.cursor()
 
     sala_id=input("Sala Id: ")
@@ -505,7 +507,7 @@ def listar_reservas_por_data(data):
    
     cursor.execute("""
     SELECT id, data_reserva, status FROM reservas WHERE data_id = ? AND status ='ativo'
-    """, (data_id,)),
+    """, (data,)),
 
     resultado = cursor.fetchall()
     
@@ -515,7 +517,7 @@ def listar_reservas_por_data(data):
     return resultado
 
 
-def listar_todas_reservas():
+def listar_todas_reservas(data, horario, motivo,status):
     """Lista todas as reservas (coordenador)."""
  
     conexao = conectar()
@@ -526,7 +528,7 @@ def listar_todas_reservas():
     listar_todas_reservas=cursor.resultado()
     conexao.close()
 
-    return todas_reservas
+    return cursor.resultado()
 
     conexao.commit()
     conexao.close()
@@ -594,7 +596,7 @@ def inserir_dados_iniciais():
 
 
 def inserir_dados_teste():
-    conexao = sqlite3.connect(BANCO)
+    conexao = conectar()
     cursor = conexao.cursor()
 
     try:
