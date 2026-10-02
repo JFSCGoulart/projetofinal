@@ -53,7 +53,7 @@ def criar_banco():
     CREATE TABLE IF NOT EXISTS salas (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT NOT NULL,
-        andar INTEGER NOT NULL,
+        andar TEXT NOT NULL,
         capacidade INTEGER NOT NULL,
         tipo TEXT NOT NULL DEFAULT 'sala_aula',
         status TEXT NOT NULL DEFAULT 'ATIVA'
