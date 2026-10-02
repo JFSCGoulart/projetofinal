@@ -1,8 +1,8 @@
 # src/menus.py
 """Todos os menus e interação com o usuário."""
-import services
-from models import Sistema
-from config import AREAS_PROJETO, HORARIOS, ANDARES
+from . import services
+from .models import Sistema
+from .config import AREAS_PROJETO, HORARIOS, ANDARES
 import os
 # ============ AUXILIARES (4) ============
 def limpar_tela():

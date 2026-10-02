@@ -2,8 +2,8 @@
 import hashlib
 import csv
 from datetime import datetime
-from banco import *
-from config import *
+from .banco import *
+from .config import *
 import re
 # ============ SEGURANÇA E VALIDAÇÕES (6) ============
 def gerar_hash(senha_digitada):
@@ -301,7 +301,6 @@ def obter_grade_horarios(sala_id, data):
     """Retorna lista de dicts com horários e status."""
     pass
 # ============ RESERVAS (3) ============
-from src.banco import conectar
 def reservar_sala(usuario_id, sala_id, data, horario, motivo):
     """Cria reserva. Retorna (sucesso, mensagem)."""
 

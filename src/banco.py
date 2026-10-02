@@ -3,7 +3,9 @@
 from src.config import BANCO
 
 import sqlite3
-
+if __name__ == "__main__":
+    criar_banco()
+    inserir_dados_teste()
 # ============ conexao ============
 def conectar():
     """Abre conexao com o banco."""

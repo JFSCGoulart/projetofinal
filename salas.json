@@ -1,0 +1,26 @@
+[
+    {
+        "id": 101,
+        "curso": "TI",
+        "andar": 1,
+        "capacidade": 30,
+        "turno": "Noturno",
+        "ativa": 1
+    },
+    {
+        "id": 102,
+        "curso": "TI",
+        "andar": 1,
+        "capacidade": 40,
+        "turno": "Matutino",
+        "ativa": 1
+    },
+    {
+        "id": 201,
+        "curso": "Design",
+        "andar": 2,
+        "capacidade": 25,
+        "turno": "Noturno",
+        "ativa": 1
+    }
+]
