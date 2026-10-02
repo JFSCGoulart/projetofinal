@@ -534,7 +534,21 @@ def listar_todas_reservas():
 
 def cancelar_reserva(reserva_id):
     """Muda status para 'cancelada'."""
-    pass
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+    try:
+        cursor.execute("""DELETE FROM reservas WHERE reserva_id = ? """, (reserva_id,)) 
+        conexao.commit()
+        return cursor.rowcount > 0
+    except Exception as cancelar: 
+        print(f"Erro ao cancelar reserva: {cancelar}")
+       
+    return False
+
+    cursor.close()
+    conexao.close()
+
 
 
 def inserir_dados_iniciais():
