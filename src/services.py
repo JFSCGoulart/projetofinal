@@ -291,12 +291,12 @@ def cadastrar_sala(nome, andar, capacidade, tipo,usuario_id ):
                 return True
             
             except Exception as e:
-            conexao.rollback()
-            print(f"Erro ao cadastrar sala: {e}")
-            return False
+                conexao.rollback()
+                print(f"Erro ao cadastrar sala: {e}")
+                return False
             
-        finally:
-            conexao.close()
+            finally:
+                conexao.close()
     pass
 def desativar_sala(sala_id,usuario_id):
     """Desativa sala (coordenador)."""
