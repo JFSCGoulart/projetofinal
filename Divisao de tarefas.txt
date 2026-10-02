@@ -107,7 +107,7 @@ def menu_publico(sistema):              | ok
 def menu_professor(sistema):            | ok 
 def menu_coordenador(sistema):          | ok
 
-# ============ PROJETOS (3) ============
+# ============ PROJETOS (3) ============  Rodrigo
 def menu_cadastrar_projeto(sistema):    | 
 def menu_meus_projetos(sistema):        |
 def menu_avaliar(sistema):              |

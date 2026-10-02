@@ -159,6 +159,60 @@ def menu_meus_projetos(sistema):
 def menu_avaliar(sistema):
     """Fluxo de avaliação."""
     pass
+def menu_cadastrar_projeto(sistema):
+    """Fluxo de cadastro de projeto."""
+
+    projeto = {}
+
+    projeto= input("Nome do projeto: ")
+    projeto= input("Descrição do projeto: ")
+    projeto= input("Categoria: ")
+
+    sistema["projetos"].append(projeto)
+
+    print("\nProjeto cadastrado com sucesso!")
+
+
+def menu_meus_projetos(sistema):
+    """Lista projetos do usuário."""
+
+    projetos = sistema["projetos"]
+
+    if not projetos:
+        print("\nNenhum projeto cadastrado.")
+        return
+
+    print("\n===== MEUS PROJETOS =====")
+
+    for i, projeto in enumerate(projetos, 1):
+        print(f"\n{i}. {projeto['nome']}")
+        print(f"   Descrição: {projeto['descricao']}")
+        print(f"   Categoria: {projeto['categoria']}")
+
+
+def menu_avaliar(sistema):
+    """Fluxo de avaliação."""
+
+    projetos = sistema["projetos"]
+
+    if not projetos:
+        print("\n Nenhum projeto para avaliar.")
+        return
+
+    print("\n===== PROJETOS PARA AVALIAR =====")
+
+    for i, projeto in enumerate(projetos, 1):
+        print(f"{i}. {projeto['nome']}")
+
+    escolha = int(input("\nEscolha o projeto: "))
+
+    if 1 <= escolha <= len(projetos):
+        nota = float(input("Digite a nota de 0 a 10: "))
+        projetos[escolha - 1]["nota"] = nota
+        print("Avaliação registrada!")
+    else:
+        print("Projeto inválido.")
+
 ########################################################################
 
 # ============ SALAS (2) ============
