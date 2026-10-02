@@ -312,7 +312,7 @@ def desativar_sala(sala_id,usuario_id):
 
     if tipo_usuario==tipo_permitido:
 
-        confirmacao = input(f"Deseja realmente desativa a seguinte sala: {id_sala}???\nDigite SIM ou NÃO: ").upper()
+        confirmacao = input(f"Deseja realmente desativa a seguinte sala: {sala_id}???\nDigite SIM ou NÃO: ").upper()
     
         if confirmacao == "SIM":
             cursor.execute("""

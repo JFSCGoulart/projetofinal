@@ -70,13 +70,13 @@ def menu_buscar_publico():
     """Busca pública de projetos."""
 
     while True:
-    print("\n--- MENU PÚBLICO ---")
-    print("consultar projetos")
-    print("buscar por área/tecnologia")
-    print("ver rancking dos projetos")
-    print("consultar salas por andar")
-    print("voltar")
-    op=input("escolha  uma opção:")
+        print("\n--- MENU PÚBLICO ---")
+        print("consultar projetos")
+        print("buscar por área/tecnologia")
+        print("ver rancking dos projetos")
+        print("consultar salas por andar")
+        print("voltar")
+        op=input("escolha  uma opção:")
 
 # ============ LOGIN / CADASTRO (2) ============
 
@@ -150,17 +150,6 @@ def menu_coordenador(sistema):
 # ============ PROJETOS (3) ============
 def menu_cadastrar_projeto(sistema):
     """Fluxo de cadastro de projeto."""
-    pass
-
-def menu_meus_projetos(sistema):
-    """Lista projetos do usuário."""
-    pass
-
-def menu_avaliar(sistema):
-    """Fluxo de avaliação."""
-    pass
-def menu_cadastrar_projeto(sistema):
-    """Fluxo de cadastro de projeto."""
 
     projeto = {}
 
@@ -218,7 +207,18 @@ def menu_avaliar(sistema):
 # ============ SALAS (2) ============
 def menu_ver_salas():
     """Mostra salas agrupadas por andar."""
-    pass
+    titulo("SALAS POR ANDAR")
+    sucesso, dados = services.listar_salas_por_andar()
+    if not sucesso:
+        mensagem("erro", dados)
+        return
+
+    for andar in sorted(dados.keys()):
+        print(f"\n  == Andar {andar} ==")
+        for s in dados[andar]:
+            status = "ATIVA" if s.get("ativa", 1) else "DESATIVADA"
+            print(f"    #{s['id']}  {s.get('curso', '-')}  cap:{s.get('capacidade', '?')}  {status}")
+    
 
 def menu_grade_sala():
     """Mostra grade de horários."""
@@ -227,11 +227,28 @@ def menu_grade_sala():
 # ============ RESERVAS (3) ============
 def menu_reservar_sala(sistema):
     """Fluxo de reserva."""
-    pass
+    titulo("RESERVAR SALA")
+    sala_id=input("Sala Id: ")
+    usuario_id=input("Usario Id: ")
+    data=input("Data: ")
+    print("Horários:", ", ".join(HORARIOS))
+    horario=input("Horario: ")
+    motivo=input("Motivo: ")
+    services.reservar_sala(usuario_id, sala_id, data, horario, motivo)   
+      
 
 def menu_minhas_reservas(sistema):
     """Lista reservas do usuário."""
-    pass
+    titulo("MINHAS RESERVAS")
+    sucesso, dados = services.listar_minhas_reservas(sistema.usuario_logado["id"])
+    if not sucesso:
+        mensagem("erro", dados)
+        return
+    if not dados:
+        mensagem("aviso", "Você não possui reservas ativas.")
+    for r in dados:
+        print(f"  #{r['id']}  {r['sala']} (andar {r['andar']})  {r['data']} {r['horario']}")
+        print(f"       Motivo: {r['motivo']}")
 
 def menu_cancelar_reserva(sistema):
     """Cancela reserva."""
@@ -240,6 +257,40 @@ def menu_cancelar_reserva(sistema):
 # ============ COORDENADOR (2) ============
 def menu_gerenciar_salas(sistema):
     """Cadastrar / desativar salas."""
+    titulo("GERENCIAR SALAS")
+    print("1 - Cadastrar nova sala")
+    print("2 - Desativar sala")
+    print("0 - Voltar")
+    op = input("Escolha: ").strip()
+
+    match op:
+        case "1":
+            curso = input("Curso: ").strip()
+            andar = int(input("Andar: "))
+            if andar is None:
+                return
+            cap = int(input("Capacidade: "))
+            if cap is None:
+                return
+            turno = input("Turno (Matutino/Vespertino/Noturno): ").strip()
+            sucesso, msg = services.cadastrar_sala(curso, andar, cap, turno)
+            mensagem("sucesso" if sucesso else "erro", msg)
+
+        case "2":
+            sid = int(input("ID da sala: "))
+            if sid is None:
+                return
+            sucesso, msg = services.desativar_sala(sid, sistema.usuario_logado["id"])
+            mensagem("sucesso" if sucesso else "erro", msg)
+
+        case "0":
+            return
+
+        case _:
+            mensagem("erro", "Opção inválida.")
+
+def menu_todas_reservas(sistema):
+    #"""Ver todas as reservas."
     pass
 
 def menu_todas_reservas(sistema):

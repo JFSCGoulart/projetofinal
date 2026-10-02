@@ -112,17 +112,17 @@ def menu_cadastrar_projeto(sistema):    |
 def menu_meus_projetos(sistema):        |
 def menu_avaliar(sistema):              |
 
-# ============ SALAS (2) ============
-def menu_ver_salas():                   |
+# ============ SALAS (2) ============     Fernando
+def menu_ver_salas():                   | ok
 def menu_grade_sala():                  |
 
-# ============ RESERVAS (3) ============ 
-def menu_reservar_sala(sistema):        | 
-def menu_minhas_reservas(sistema):      | 
+# ============ RESERVAS (3) ============  Fernando
+def menu_reservar_sala(sistema):        | ok
+def menu_minhas_reservas(sistema):      | ok
 def menu_cancelar_reserva(sistema):     | 
 
-# ============ COORDENADOR (2) ============
-def menu_gerenciar_salas(sistema):      |
+# ============ COORDENADOR (2) ========== Fernando
+def menu_gerenciar_salas(sistema):      | ok
 def menu_todas_reservas(sistema):       |
 
 # ============ RELATÓRIOS (1) ============
