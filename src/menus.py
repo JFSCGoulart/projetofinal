@@ -316,8 +316,15 @@ def menu_ver_salas():
     agrupadas = services.listar_salas_agrupadas()
     if not agrupadas:
         mensagem("aviso", "Nenhuma sala cadastrada.")
-    for andar in sorted(agrupadas):
-        nome_andar = ANDARES.get(andar, f"{andar}º Andar")
+    andares_ordenados = sorted(
+        agrupadas,
+        key=lambda andar: (0, int(andar))
+        if str(andar).isdigit()
+        else (1, str(andar))
+    )
+    for andar in andares_ordenados:
+        andar_normalizado = int(andar) if str(andar).isdigit() else andar
+        nome_andar = ANDARES.get(andar_normalizado, f"{andar}º Andar")
         print(f"\n== {nome_andar} ==")
         for s in agrupadas[andar]:
             print(f"  #{s['id']} {s['nome']} | cap: {s['capacidade']} | "
