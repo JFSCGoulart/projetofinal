@@ -27,11 +27,11 @@ def media_projeto			        | ok
 def ranking_projetos			    | ok
 
 # ============ SALAS (5) ============
-def inserir_sala			    |so
-def buscar_sala_por_id			|cor	
-def listar_salas():			    |ro		Dany
-def listar_salas_por_andar		|!
-def desativar_sala			    |!
+def inserir_sala			    |ok
+def buscar_sala_por_id			|ok	
+def listar_salas():			    |ok		Dany
+def listar_salas_por_andar		|ok?
+def desativar_sala			    |ok
 
 # ============ RESERVAS (6) ============
 def inserir_reserva			    |ok
@@ -39,7 +39,7 @@ def verificar_disponibilidade	|ok
 def listar_reservas_usuario		|ok	  JoJo
 def listar_reservas_por_data	|OK		
 def listar_todas_reservas		|ok
-def cancelar_reserva			|
+def cancelar_reserva			|ok
 
 #######################################################################
 
@@ -47,11 +47,11 @@ def cancelar_reserva			|
 # src/services.py
 
 # ============ SEGURANÇA E VALIDAÇÕES (6) ============ Arthur 
-def gera r_hash(senha_digitada):			|ok
-def verificar_senha				        |ok	
+def gerar_hash(senha_digitada):			|ok
+def verificar_senha						|ok
 def validar_email(email):			    |ok
 def validar_senha(senha):			    |ok
-def validar_data(data):				    |ok  
+def validar_data(data):				    |ok
 def validar_campo(valor, nome_campo):	|ok
 
 # ============ AUTENTICAÇÃO (2) ============ Daniel 
@@ -70,9 +70,9 @@ def obter_ranking(limite=10):		|ok
 def avaliar_projeto				| ok
 
 # ============ SALAS (4) ============
-def listar_salas_agrupadas():	|
-def cadastrar_sala				|
-def desativar_sala				|ok Arthur
+def listar_salas_agrupadas():	|ok? Arthur
+def cadastrar_sala				|ok? Arthur
+def desativar_sala				|ok? Arthur
 def obter_grade_horarios		|
 
 # ============ RESERVAS (3) ============ THAYNA OK
@@ -96,7 +96,7 @@ def mensagem(tipo, texto):              | OK
 # ============ MENU PRINCIPAL (3) ============ Fernando/Rodrigo
 def menu_principal(sistema):            | OK 
 def menu_visitante():                   | 
-def menu_buscar_publico():              |
+def menu_buscar_publico():              |ok
 
 # ============ LOGIN / CADASTRO (2) ============ Rodrigo
 def menu_cadastro():                    |  ok
@@ -107,22 +107,22 @@ def menu_publico(sistema):              | ok
 def menu_professor(sistema):            | ok 
 def menu_coordenador(sistema):          | ok
 
-# ============ PROJETOS (3) ============
-def menu_cadastrar_projeto(sistema):    | 
-def menu_meus_projetos(sistema):        |
-def menu_avaliar(sistema):              |
+# ============ PROJETOS (3) ============  Rodrigo
+def menu_cadastrar_projeto(sistema):    | ok
+def menu_meus_projetos(sistema):        |ok
+def menu_avaliar(sistema):              |ok
 
-# ============ SALAS (2) ============
-def menu_ver_salas():                   |
+# ============ SALAS (2) ============     Fernando
+def menu_ver_salas():                   | ok
 def menu_grade_sala():                  |
 
-# ============ RESERVAS (3) ============ 
-def menu_reservar_sala(sistema):        | 
-def menu_minhas_reservas(sistema):      | 
+# ============ RESERVAS (3) ============  Fernando
+def menu_reservar_sala(sistema):        | ok
+def menu_minhas_reservas(sistema):      | ok
 def menu_cancelar_reserva(sistema):     | 
 
-# ============ COORDENADOR (2) ============
-def menu_gerenciar_salas(sistema):      |
+# ============ COORDENADOR (2) ========== Fernando
+def menu_gerenciar_salas(sistema):      | ok
 def menu_todas_reservas(sistema):       |
 
 # ============ RELATÓRIOS (1) ============
