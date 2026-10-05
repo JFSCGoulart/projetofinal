@@ -316,12 +316,20 @@ def menu_ver_salas():
     agrupadas = services.listar_salas_agrupadas()
     if not agrupadas:
         mensagem("aviso", "Nenhuma sala cadastrada.")
-    for andar in sorted(agrupadas):
-        nome_andar = ANDARES.get(andar, f"{andar}º Andar")
+    for andar in sorted(agrupadas, key=lambda valor: str(valor)):
+        try:
+            andar_ref = int(andar)
+        except (ValueError, TypeError):
+            andar_ref = andar
+        nome_andar = ANDARES.get(andar_ref, f"{andar}º Andar")
         print(f"\n== {nome_andar} ==")
         for s in agrupadas[andar]:
-            print(f"  #{s['id']} {s['nome']} | cap: {s['capacidade']} | "
-                  f"{s['tipo']} | {s['status']}")
+            print(
+                f"  #{s.get('id', '?')} {s.get('nome', 'Sala sem nome')} | "
+                f"cap: {s.get('capacidade', '?')} | "
+                f"{s.get('tipo', 'tipo não informado')} | "
+                f"{s.get('status', 'status não informado')}"
+            )
     pausar()
 
 
