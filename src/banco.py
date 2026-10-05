@@ -339,21 +339,33 @@ def inserir_sala(nome, andar, capacidade, tipo):
     """Insere nova sala (coordenador)."""
     conexao = conectar()
     cursor= conexao.cursor()
-    for nome, andar, capacidade, tipo in cursor.fetchall():
-        if inserir_sala=="coordenador":
-            us=("Usuário: ")
-            nome=input("Nome: ")
-            andar=input("Andar: ")
-            cap=input("Capacidade: ")
-            tipo=input("Tipo: ")
+    while True:
+        usuario_id=input("Digite o ID: ")
+        cursor.execute(
+            """
+            SELECT tipo FROM usuarios WHERE id = ?
+            """,(usuario_id)
+        )
+        result = cursor.fetchone
+
+        if result is None:
+            print("Usuário não identificado")
+        elif result=="coordenador":
+            print("Usuário autorizado")
             break
         else:
             print("Usuário não autorizado")
+            
+        nome=input("Nome: ")
+        andar=input("Andar: ")
+        capacidade=input("Capacidade: ")
+        tipo=input("Tipo: ")
+        
     cursor.execute(
         """
         INSERT INTO sala (nome, andar, capacidade, tipo) VALUES(?,?,?,?)
         """,(nome, andar, capacidade, tipo)
-    )
+        )
 
     conexao.commit()
     conexao.close()
@@ -363,24 +375,29 @@ def buscar_sala_por_id():
     conexao = conectar()
     cursor=conexao.cursor()
 
-    busca=input("Insira a sala: ")
+    busca=input("Insira o ID da sala: ")
 
     cursor.execute(
     """
         SELECT * FROM salas
-        WHERE nome = ?
+        WHERE id = ?
     """,(busca,)
     )
     for id, nome, andar, capacidade, tipo, ativa in cursor.fetchall():
-            print(f"ID de Sala:{id}\n - Nome: {nome}\n - Andar: {andar}\n - Capacidade: {capacidade}\n - Tipo: {tipo}\n - Status: {ativa}")
+        print(f"ID de Sala:{id}\n - Nome: {nome}\n - Andar: {andar}\n - Capacidade: {capacidade}\n - Tipo: {tipo}\n - Status: {ativa}")
     conexao.close()
 
 
-def listar_salas():
+def listar_salas(id):
     """Lista todas as salas ativas."""
     conexao = conectar()
     cursor = conexao.cursor()
-    cursor.execute ("SELECT * FROM sala")
+    cursor.execute (
+       """
+       SELECT * FROM sala
+       WHERE status = ativo
+       """,(id,)
+       )
     sala = cursor.fetchall()
     conexao.close()
     return sala
@@ -389,7 +406,12 @@ def listar_salas_por_andar(andar):
     """Lista salas de um andar."""
     conexao = conectar()
     cursor = conexao.cursor()
-    cursor.execute ("""SELECT * FROM sala""")
+    cursor.execute (
+        """
+        SELECT * FROM sala
+        WHERE andar = ?
+        """,(andar,)
+        )
     sala = cursor.fetchall()
     conexao.close()
     return sala
@@ -399,14 +421,16 @@ def desativar_sala(sala_id):
     conexao = conectar()
     cursor=conexao.cursor()
 
-    busca=input("Desativar sala(ID): ")
-    cursor.execute("""
-        DELETE FROM sala
+    busca=input("Desativar sala por ID: ")
+    cursor.execute(
+        """
+        UPDATE sala
+        SET status = "inativa"
         WHERE id =?
-    """, (busca,))
+        """, (busca, sala_id)
+        )
     conexao.commit()
     conexao.close()
-
 
 # ============ RESERVAS (6) ============
 def inserir_reserva(sala_id, usuario_id, data, horario, motivo):
