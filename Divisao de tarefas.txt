@@ -47,7 +47,7 @@ def cancelar_reserva			|
 # src/services.py
 
 # ============ SEGURANÇA E VALIDAÇÕES (6) ============ Arthur 
-def gerar_hash(senha_digitada):			|ok
+def gera r_hash(senha_digitada):			|ok
 def verificar_senha				        |ok	
 def validar_email(email):			    |ok
 def validar_senha(senha):			    |ok
