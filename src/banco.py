@@ -4,6 +4,35 @@ from hashlib import sha256
 from src.config import BANCO
 
 
+# ============ MIGRAÇÃO ============
+def esquema_legado_detectado(cursor):
+    """Detecta se o banco local está em um esquema antigo/incompatível."""
+    tabelas = {
+        linha[0]
+        for linha in cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+    }
+
+    if "usuario" in tabelas or "projeto" in tabelas:
+        return True
+
+    if "salas" in tabelas:
+        colunas_salas = {linha[1] for linha in cursor.execute("PRAGMA table_info(salas)")}
+        if "status" not in colunas_salas:
+            return True
+
+    if "reservas" in tabelas:
+        fks_reservas = {linha[2] for linha in cursor.execute("PRAGMA foreign_key_list(reservas)")}
+        if "usuario" in fks_reservas:
+            return True
+
+    if "avaliacoes" in tabelas:
+        fks_avaliacoes = {linha[2] for linha in cursor.execute("PRAGMA foreign_key_list(avaliacoes)")}
+        if "usuario" in fks_avaliacoes or "projeto" in fks_avaliacoes:
+            return True
+
+    return False
+
+
 # ============ CONEXÃO ============
 def conectar():
     """Abre conexão com o banco."""
@@ -17,6 +46,17 @@ def criar_banco():
     """Cria as tabelas, se não existirem."""
     conexao = conectar()
     cursor = conexao.cursor()
+    if esquema_legado_detectado(cursor):
+        cursor.executescript("""
+        DROP TABLE IF EXISTS reservas;
+        DROP TABLE IF EXISTS avaliacoes;
+        DROP TABLE IF EXISTS projeto;
+        DROP TABLE IF EXISTS projetos;
+        DROP TABLE IF EXISTS salas;
+        DROP TABLE IF EXISTS usuarios;
+        DROP TABLE IF EXISTS usuario;
+        """)
+
     cursor.executescript("""
     CREATE TABLE IF NOT EXISTS usuarios (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
