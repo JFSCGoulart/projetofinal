@@ -443,7 +443,7 @@ def menu_listar_usuarios():
 
 
 # ============ RELATÓRIOS ============
-def menu_relatorios(sistema):
+def menu_relatorios():
     titulo("EXPORTAR RELATÓRIO")
     sucesso, msg = services.exportar_csv()
     mensagem("sucesso" if sucesso else "erro", msg)
